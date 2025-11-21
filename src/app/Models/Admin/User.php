@@ -9,6 +9,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -20,6 +21,7 @@ class User extends Authenticatable
         'login_id',
         'password',
     ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -29,6 +31,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
     /**
      * The attributes that should be cast.
      *
@@ -37,6 +40,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     //passwordのカラム名オーバーライド
     public function getAuthPassword()
     {

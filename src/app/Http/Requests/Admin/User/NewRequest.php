@@ -19,6 +19,7 @@ class NewRequest extends FormRequest
             'password' => 'パスワード',
         ];
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
