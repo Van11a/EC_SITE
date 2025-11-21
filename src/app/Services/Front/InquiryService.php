@@ -22,20 +22,20 @@ class UserService
     public function createNewUser($request)
     {
         $result = $request->only(['name','login_id']);
-        $date = array_merge($result, ([
+        $data = array_merge($result, ([
             'unid' => (string) Str::uuid(),
             'password' => Hash::make($request['password']),
         ]));
-        $this->userRepository->create($date);
+        $this->userRepository->create($data);
     }
     public function updateUser($request,$id)
     {
-        $date = $request->only(['name','login_id','password']);
-        if(isset($date['password'])){
-            $date['password'] = Hash::make($request['password']);
+        $data = $request->only(['name','login_id','password']);
+        if(isset($data['password'])){
+            $data['password'] = Hash::make($request['password']);
         }else{
-            unset($date['password']);
+            unset($data['password']);
         }
-        $this->userRepository->update($date,$id);
+        $this->userRepository->update($data,$id);
     }
 }

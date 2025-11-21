@@ -35,18 +35,18 @@ class KeyVisualService
         Storage::move('public/'.$request['image'], '/public/key_visuals/'.basename($request['image']));
         return 'key_visuals/'.basename($request['image']);
     }
-    public function updateuploadedImageToServer($request,$date)
+    public function updateuploadedImageToServer($request,$data)
     {
         if($request['image']){
             $before_image = $request['before_image'];
             Storage::move('public/'.$request['image'], '/public/key_visuals/'.basename($request['image']));
-            $date['image'] = 'key_visuals/'.basename($request['image']);
+            $data['image'] = 'key_visuals/'.basename($request['image']);
             //更新前の画像を削除
             if($before_image != $request['image'] && Storage::exists('public/'.$before_image)){
                 Storage::delete('public/'.$before_image);
             }
         }
-        return $date;
+        return $data;
     }
     public function deleteImagesOnTemporaryServer()
     {
@@ -57,15 +57,15 @@ class KeyVisualService
     }
     public function createNewKeyVisual($request)
     {
-        $date = $request->only(['title','url','is_new_window','public_start_date','public_end_date','display_order','is_display','image']);
-        $date['image'] = $this->uploadImageToServer($request);
-        $this->keyVisualRepository->create($date);
+        $data = $request->only(['title','url','is_new_window','public_start_date','public_end_date','display_order','is_display','image']);
+        $data['image'] = $this->uploadImageToServer($request);
+        $this->keyVisualRepository->create($data);
     }
     public function updateKeyVisual($request,$id)
     {
-        $date = $request->only(['title','url','is_new_window','public_start_date','public_end_date','display_order','is_display','image']);
-        $date = $this->updateuploadedImageToServer($request,$date);
-        $this->keyVisualRepository->update($date,$id);
+        $data = $request->only(['title','url','is_new_window','public_start_date','public_end_date','display_order','is_display','image']);
+        $data = $this->updateuploadedImageToServer($request,$data);
+        $this->keyVisualRepository->update($data,$id);
     }
     public function destroyKeyVisual($id)
     {

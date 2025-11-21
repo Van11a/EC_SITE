@@ -41,14 +41,14 @@ class TransferService
     }
     public function createNewTransfer($request)
     {
-        $date = $request->only(['last_name','first_name','last_name_kana','first_name_kana','tel','postcode','email','settlement_amount','remarks']);
-        $date['management_number'] = $this->generateTransferManagementNumber();
-        $this->transferRepository->create($date);
+        $data = $request->only(['last_name','first_name','last_name_kana','first_name_kana','tel','postcode','email','settlement_amount','remarks']);
+        $data['management_number'] = $this->generateTransferManagementNumber();
+        $this->transferRepository->create($data);
     }
     public function updateTransfer($request,$id)
     {
-        $date = $request->only(['last_name','first_name','last_name_kana','first_name_kana','tel','postcode','email','settlement_amount','remarks']);
-        $this->transferRepository->update($date,$id);
+        $data = $request->only(['last_name','first_name','last_name_kana','first_name_kana','tel','postcode','email','settlement_amount','remarks']);
+        $this->transferRepository->update($data,$id);
     }
     public function destroyTransfer($id)
     {
