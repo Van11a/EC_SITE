@@ -34,6 +34,8 @@ class EditRequest extends FormRequest
      */
     public function rules(Request $request)
     {
+        $key_visual_model = $this->route('key_visual');
+
         return [
             'title' => 'required|string',
             'image' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
@@ -45,8 +47,8 @@ class EditRequest extends FormRequest
             'display_order' => [
                 'required',
                 'integer',
-                Rule::unique('key_visuals')->ignore($request->id,'id')->where(function ($request){
-                    return $request->whereNull('deleted_at');
+                Rule::unique('key_visuals')->ignore($key_visual_model)->where(function ($query){
+                    return $query->whereNull('deleted_at');
                 })
             ],
             'is_display' => 'required|in:0,1',

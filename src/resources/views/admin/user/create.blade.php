@@ -66,7 +66,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">入力確認へ</button>
                         </form>
                     </div>
                 </div>

@@ -51,7 +51,7 @@
                                 </div>
                                 <input type="hidden" name="password" value="{{$user['password']}}">
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">登録する</button>
                         </form>
                     </div>
                 </div>

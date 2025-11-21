@@ -6,6 +6,7 @@ use App\Http\Requests\Admin\User\EditRequest;
 use App\Models\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\UserService;
+
 class UserController extends Controller
 {
     private $userService;
@@ -13,6 +14,7 @@ class UserController extends Controller
     {
         $this->userService = $userService;
     }
+
     /**
      * 一覧画面
      */
@@ -20,12 +22,14 @@ class UserController extends Controller
         $users = $this->userService->getAllUser();
         return view('admin.user.index',compact('users'));
     }
+
     /**
      * 登録画面
      */
     public function create() {
         return view('admin.user.create');
     }
+
     /**
      * 登録確認画面
      */
@@ -34,6 +38,7 @@ class UserController extends Controller
         $user = $request->validated();
         return view('admin.user.create-confirm',compact('user'));
     }
+
     /**
      * 登録処理
      */
@@ -49,6 +54,7 @@ class UserController extends Controller
             ])->withInput(); 
         }
     }
+
     /**
      * 編集処理
      */
@@ -57,23 +63,27 @@ class UserController extends Controller
         $user = $this->userService->getUser($id);
         return view('admin.user.edit', compact('user'));
     }
+
     /**
      * 編集確認処理
      */
-    public function edit_confirm(EditRequest $request) 
+    public function edit_confirm(User $user, EditRequest $request) 
     {
-        $user = $request->validated();
-        $user['id'] = intval($request['id']);
+        $validated_data = $request->validated();
+        $request->session()->flash('input_data', $validated_data);
         return view('admin.user.edit-confirm',compact('user'));
     }
+
     /**
      * 編集処理
      */
-    public function update(Request $request, $id)
+    public function update(User $user, Request $request)
     {
-        $this->userService->updateUser($request,$id);
+        $validated_data = $request->session()->get('input_data');
+        $this->userService->updateUser($user,$validated_data);
         return redirect()->route('user.complete');
     }
+
     /**
      * 完了画面
      */

@@ -4,26 +4,32 @@ use App\Models\Admin\KeyVisual;
 class KeyVisualRepository
 {
     protected $keyVisual;
+
     public function __construct(KeyVisual $keyVisual)
     {
         $this->keyVisual = $keyVisual;
     }
+
     public function getById($id)
     {
         return $this->keyVisual->find($id);
     }
+
     public function getAll()
     {
         return $this->keyVisual->paginate(10);
     }
+
     public function create(array $data)
     {
         return $this->keyVisual->create($data);
     }
-    public function update(array $data, $id)
+
+    public function update(KeyVisual $keyVisual, array $data)
     {
-        return $this->keyVisual->where('id', $id)->update($data);
+        return $keyVisual->update($data);
     }
+
     public function destroy($id)
     {
         return $this->keyVisual->destroy($id);

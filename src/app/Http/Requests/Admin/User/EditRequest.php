@@ -19,6 +19,7 @@ class EditRequest extends FormRequest
             'password' => 'パスワード',
         ];
     }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,17 +27,19 @@ class EditRequest extends FormRequest
      */
     public function rules(Request $request)
     {
+        $user_model = $this->route('user');
+
         return [
             'name'=>'required|string|max:30',
             'login_id'=>[
                 'required', 
                 'string', 
-                Rule::unique('users')->ignore($request->id,'id')],
+                Rule::unique('users')->ignore($user_model)],
             'password'=>[
                 'nullable',
                 'min:6',
                 'confirmed',
-                'regex:/^[a-zA-Z0-9_-]+$/',
+             s   'regex:/^[a-zA-Z0-9_-]+$/',
             ],
         ];
     }

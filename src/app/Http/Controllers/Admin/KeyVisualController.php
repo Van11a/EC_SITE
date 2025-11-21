@@ -14,6 +14,7 @@ class KeyVisualController extends Controller
     {
         $this->keyVisualService = $keyVisualService;
     }
+
     /**
      * 一覧画面
      */
@@ -26,21 +27,24 @@ class KeyVisualController extends Controller
             throw $e;
         }
     }
+
     /**
      * 登録画面
      */
     public function create() {
         return view('admin.keyvisual.create');
     }
+
     /**
      * 登録確認画面
      */
     public function create_confirm(NewRequest $request)
     {
-        $key_visual = $request->validated();
-        $key_visual = $this->keyVisualService->uploadImageToTemporaryServer($request,$key_visual);
+        $validated_data = $request->validated();
+        $key_visual = $this->keyVisualService->uploadImageToTemporaryServer($validated_data,$request);
         return view('admin.keyvisual.create-confirm',compact('key_visual'));
     }
+
     /**
      * 登録処理
      */
@@ -48,15 +52,16 @@ class KeyVisualController extends Controller
     {
         try {
             $this->keyVisualService->createNewKeyVisual($request);
-            return redirect()->route('keyvisual.complete');
+            return redirect()->route('key_visual.complete');
         } catch (\Throwable $e) {
             report($e);
-            return redirect()->route('keyvisual.index')->with([
+            return redirect()->route('key_visual.index')->with([
                 'message' => '保存に失敗しました'
             ])->withInput(); 
         }
         
     }
+
     /**
      * 編集処理
      */
@@ -65,31 +70,35 @@ class KeyVisualController extends Controller
         $key_visual = $this->keyVisualService->getKeyVisual($id);
         return view('admin.keyvisual.edit', compact('key_visual'));
     }
+
     /**
      * 編集確認処理
      */
-    public function edit_confirm(EditRequest $request, $id) 
+    public function edit_confirm(KeyVisual $key_visual, EditRequest $request) 
     {
-        $key_visual = $request->validated();
-        $key_visual['id'] = intval($request['id']);
-        $key_visual = $this->keyVisualService->uploadImageToTemporaryServer($request,$key_visual);
+        $validated_data = $request->validated();
+        $result_data = $this->keyVisualService->uploadImageToTemporaryServer($validated_data,$request);
+        $request->session()->flash('input_data', $result_data);
         return view('admin.keyvisual.edit-confirm',compact('key_visual'));
     }
+
     /**
      * 編集処理
      */
-    public function update(Request $request, $id)
+    public function update(KeyVisual $key_visual, Request $request)
     {
-        try{
-            $this->keyVisualService->updateKeyVisual($request,$id);
-            return redirect()->route('keyvisual.complete');
-        } catch (\Throwable $e) {
-            report($e);
-            return redirect()->route('keyvisual.index')->with([
-                'message' => '保存に失敗しました'
-            ])->withInput(); 
-        }
+        $validated_data = $request->session()->get('input_data');
+        // try{
+            $this->keyVisualService->updateKeyVisual($key_visual,$validated_data);
+            return redirect()->route('key_visual.complete');
+        // } catch (\Throwable $e) {
+        //     report($e);
+        //     return redirect()->route('key_visual.index')->with([
+        //         'message' => '保存に失敗しました'
+        //     ])->withInput(); 
+        // }
     }
+
     /**
      * 完了画面
      */
@@ -98,6 +107,7 @@ class KeyVisualController extends Controller
         $this->keyVisualService->deleteImagesOnTemporaryServer();
         return view('admin.keyvisual.complete');
     }
+
     /**
      * 削除確認処理
      */
@@ -106,7 +116,7 @@ class KeyVisualController extends Controller
         $key_visual = $this->keyVisualService->getKeyVisual($id);
         return view('admin.keyvisual.destroy-confirm',compact('key_visual'));
     }
-    
+
     /**
      * 削除機能
      */
@@ -117,7 +127,7 @@ class KeyVisualController extends Controller
             return view('admin.keyvisual.complete');
         } catch (\Throwable $e){
             report($e);
-            return redirect()->route('keyvisual.index')->with([
+            return redirect()->route('key_visual.index')->with([
                 'message' => '削除に失敗しました'
             ])->withInput(); 
         }

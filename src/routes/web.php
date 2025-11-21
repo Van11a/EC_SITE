@@ -16,7 +16,7 @@ Route::middleware('auth')->group(function() {
     }); 
     //アカウント管理
     Route::post('admin/user/create-confirm', 'App\Http\Controllers\Admin\UserController@create_confirm')->name('user.create-confirm');
-    Route::post('admin/user/edit-confirm', 'App\Http\Controllers\Admin\UserController@edit_confirm')->name('user.edit-confirm');
+    Route::post('admin/user/{user}/edit-confirm', 'App\Http\Controllers\Admin\UserController@edit_confirm')->name('user.edit-confirm');
     Route::get('admin/user/complete', 'App\Http\Controllers\Admin\UserController@complete')->name('user.complete');
     Route::resource('admin/user', 'App\Http\Controllers\Admin\UserController', ['except' => ['destroy']]);
     // //宝石管理
@@ -39,11 +39,11 @@ Route::middleware('auth')->group(function() {
     // Route::get('admin/product/{product}/copying', 'App\Http\Controllers\Admin\ProductController@copying')->name('product.copying');
     // Route::resource('admin/product', 'App\Http\Controllers\Admin\ProductController');
     // //キービジュアル管理
-    Route::post('admin/keyvisual/create-confirm', 'App\Http\Controllers\Admin\KeyVisualController@create_confirm')->name('keyvisual.create-confirm');
-    Route::post('admin/keyvisual/{keyvisual}/edit-confirm', 'App\Http\Controllers\Admin\KeyVisualController@edit_confirm')->name('keyvisual.edit-confirm');
-    Route::get('admin/keyvisual/{keyvisual}/destroy-confirm', 'App\Http\Controllers\Admin\KeyVisualController@destroy_confirm')->name('keyvisual.destroy-confirm');
-    Route::get('admin/keyvisual/complete', 'App\Http\Controllers\Admin\KeyVisualController@complete')->name('keyvisual.complete');
-    Route::resource('admin/keyvisual', 'App\Http\Controllers\Admin\KeyVisualController');
+    Route::post('admin/key_visual/create-confirm', 'App\Http\Controllers\Admin\KeyVisualController@create_confirm')->name('key_visual.create-confirm');
+    Route::post('admin/key_visual/{key_visual}/edit-confirm', 'App\Http\Controllers\Admin\KeyVisualController@edit_confirm')->name('key_visual.edit-confirm');
+    Route::get('admin/key_visual/{key_visual}/destroy-confirm', 'App\Http\Controllers\Admin\KeyVisualController@destroy_confirm')->name('key_visual.destroy-confirm');
+    Route::get('admin/key_visual/complete', 'App\Http\Controllers\Admin\KeyVisualController@complete')->name('key_visual.complete');
+    Route::resource('admin/key_visual', 'App\Http\Controllers\Admin\KeyVisualController');
     // //振込管理
     // Route::post('admin/transfer/create-confirm', 'App\Http\Controllers\Admin\TransferController@create_confirm')->name('transfer.create-confirm');
     // Route::post('admin/transfer/{transfer}/edit-confirm', 'App\Http\Controllers\Admin\TransferController@edit_confirm')->name('transfer.edit-confirm');
@@ -66,10 +66,3 @@ Route::get('/', 'App\Http\Controllers\Front\TopController@index')->name('top.ind
 // Route::post('transfer/get-token', 'App\Http\Controllers\Front\TransferController@get_token')->name('front-payment.get-token');
 // Route::post('transfer/payment-completion', 'App\Http\Controllers\Front\TransferController@payment_completion')->name('front-payment.payment-completion');
 require __DIR__.'/auth.php';
-
-
-//アカウント管理
-Route::post('admin/user/create-confirm', 'App\Http\Controllers\Admin\UserController@create_confirm')->name('user.create-confirm');
-Route::post('admin/user/edit-confirm', 'App\Http\Controllers\Admin\UserController@edit_confirm')->name('user.edit-confirm');
-Route::get('admin/user/complete', 'App\Http\Controllers\Admin\UserController@complete')->name('user.complete');
-Route::resource('admin/user', 'App\Http\Controllers\Admin\UserController');

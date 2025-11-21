@@ -28,9 +28,8 @@
                     </div>
 
                     <div class="form-wrap">
-                        <form method="POST" action="{{ route('user.edit-confirm') }}">
+                        <form method="POST" action="{{ route('user.edit-confirm',$user) }}">
                             @csrf
-                            <input type="hidden" value="{{ $user->id }}" name="id">
                             <div class="mb-3 row">
                                 <label for="inputName" class="col-sm-2 col-form-label">管理者名</label>
                                 <div class="col-sm-10">
@@ -67,7 +66,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">登録する</button>
                         </form>
                     </div>
                 </div>

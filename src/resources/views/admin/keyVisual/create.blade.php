@@ -28,9 +28,9 @@
                     </div>
 
                     <div class="form-wrap">
-                        <form method="POST" action="{{ route('keyvisual.create-confirm') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('key_visual.create-confirm') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="mb-3 row">
+                            <div class="mb-4 row">
                                 <label for="inputTitle" class="col-sm-2 col-form-label">タイトル<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <input type="text" name="title" class="form-control" id="inputTitle" value="{{ old('title')}}">
@@ -39,7 +39,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="mb-4 row">
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <div class="mb-2">
@@ -58,7 +58,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="mb-1 row">
                                 <label for="inputUrl" class="col-sm-2 col-form-label">URL</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="url" class="form-control" id="inputUrl" value="{{ old('url')}}">
@@ -67,14 +67,14 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label">別窓表示</label>
+                            <div class="mb-4 row">
+                                <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input type="hidden" name="is_new_window" value="0">
                                         <input class="form-check-input" name="is_new_window" type="checkbox" value="1" @if (old('is_new_window') === 1) checked @endif>
                                         <label class="form-check-label">
-                                            この設定を有効にする
+                                            別窓で表示する
                                         </label>
                                     </div>
                                     @if($errors->has('is_new_window'))
@@ -82,18 +82,18 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="mb-4 row">
                                 <label class="col-sm-2 col-form-label">表示期間</label>
                                 <div class="col-sm-10">
                                     <div class="row g-2 align-items-center">
                                         <div class="col-auto">
-                                            <input type="date" class="form-control" id="startDate" name="public_start_date" aria-label="開始日" @if((old('public_start_date'))) value="{{old('public_start_date')}}" @endif>
+                                            <input type="datetime-local" class="form-control" id="startDate" name="public_start_date" aria-label="開始日" @if((old('public_start_date'))) value="{{old('public_start_date')}}" @endif>
                                         </div>
                                         <div class="col-auto">
                                             <span class="text-muted">〜</span>
                                         </div>
                                         <div class="col-auto">
-                                            <input type="date" class="form-control" id="endDate" name="public_end_date" aria-label="終了日" @if((old('public_end_date'))) value="{{old('public_end_date')}}" @endif>
+                                            <input type="datetime-local" class="form-control" id="endDate" name="public_end_date" aria-label="終了日" @if((old('public_end_date'))) value="{{old('public_end_date')}}" @endif>
                                         </div>
                                         @if($errors->has('public_start_date') || $errors->has('public_end_date'))
                                             <div class="col-12 mt-1">
@@ -108,8 +108,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-3 row">
-                                <label for="inputDisplayOrder" class="col-sm-2 col-form-label">表示順</label>
+                            <div class="mb-4 row">
+                                <label for="inputDisplayOrder" class="col-sm-2 col-form-label">表示順<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-3">
                                     <input 
                                         type="number" 
@@ -127,7 +127,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="mb-3 row">
+                            <div class="mb-4 row">
                                 <label class="col-sm-2 col-form-label">表示設定<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <div class="d-flex"> 
@@ -149,7 +149,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">登録する</button>
+                            <button type="submit" class="btn btn-primary">入力確認へ進む</button>
                         </form>
                     </div>
                 </div>

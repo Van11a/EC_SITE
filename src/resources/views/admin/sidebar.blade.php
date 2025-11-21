@@ -27,7 +27,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('keyvisual.index') }}">
+        <a class="nav-link" href="{{ route('key_visual.index') }}">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>キービジュアル管理</span></a>
     </li>

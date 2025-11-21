@@ -24,10 +24,10 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <h1 class="h3 mb-0 text-gray-800">キービジュアル管理</h1>
                     </div>
                     <div class="float-right pr-4">
-                        <a href="{{ route('keyvisual.create') }}">
+                        <a href="{{ route('key_visual.create') }}">
                             <button type="button" class="btn btn-primary">新規登録</button>
                         </a>
                     </div>
@@ -38,27 +38,23 @@
                             <table class="table table-hover bg-white">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>ログインID</th>
-                                        <th>管理者名</th>
-                                        <th>登録日</th>
-                                        <th>更新日</th>
+                                        <th>表示順</th>
+                                        <th>画像</th>
+                                        <th>タイトル</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($key_visuals as $key_visual)
                                     <tr>
-                                        <td>{{$key_visual->id}}</td>
-                                        <td>{{$key_visual->login_id}}</td>
-                                        <td>{{$key_visual->name}}</td>
-                                        <td>{{ date('Y年n月j日'), $key_visual->ins_date}}</td>
-                                        <td>{{ date('Y年n月j日'), $key_visual->up_date}}</td>
+                                        <td>{{$key_visual->display_order}}</td>
+                                        <td><img style="max-height:80px;" src="{{ $key_visual['image'] ? Storage::disk('public')->url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}"></td>
+                                        <td>{{$key_visual->title}}</td>
                                         <td>
-                                            <a href="{{ route('user.edit', $key_visual->id) }}">
+                                            <a href="{{ route('key_visual.edit', $key_visual->id) }}">
                                                 <button type="button" class="btn btn-warning">編集</button>
                                             </a>
-                                            {{--<a href="{{ route('user.destroy') }}">
+                                            {{--<a href="{{ route('key_visual.destroy') }}">
                                                 <button type="button" class="btn btn-danger">削除</button>
                                             </a>--}}
                                         </td>
