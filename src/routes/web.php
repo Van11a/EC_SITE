@@ -19,18 +19,6 @@ Route::middleware('auth')->group(function() {
     Route::post('admin/user/{user}/edit-confirm', 'App\Http\Controllers\Admin\UserController@edit_confirm')->name('user.edit-confirm');
     Route::get('admin/user/complete', 'App\Http\Controllers\Admin\UserController@complete')->name('user.complete');
     Route::resource('admin/user', 'App\Http\Controllers\Admin\UserController', ['except' => ['destroy']]);
-    // //宝石管理
-    // Route::post('admin/jewel/create-confirm', 'App\Http\Controllers\Admin\JewelController@create_confirm')->name('jewel.create-confirm');
-    // Route::post('admin/jewel/edit-confirm', 'App\Http\Controllers\Admin\JewelController@edit_confirm')->name('jewel.edit-confirm');
-    // Route::get('admin/jewel/{jewel}/destroy-confirm', 'App\Http\Controllers\Admin\JewelController@destroy_confirm')->name('jewel.destroy-confirm');
-    // Route::get('admin/jewel/complete', 'App\Http\Controllers\Admin\JewelController@complete')->name('jewel.complete');
-    // Route::resource('admin/jewel', 'App\Http\Controllers\Admin\JewelController');
-    // //宝石カラー管理
-    // Route::post('admin/jewel/{jewel}/color/create-confirm', 'App\Http\Controllers\Admin\ColorController@create_confirm')->name('color.create-confirm');
-    // Route::post('admin/jewel/{jewel}/color/{color}/edit-confirm', 'App\Http\Controllers\Admin\ColorController@edit_confirm')->name('color.edit-confirm');
-    // Route::get('admin/jewel/{jewel}/color/{color}/destroy-confirm', 'App\Http\Controllers\Admin\ColorController@destroy_confirm')->name('color.destroy-confirm');
-    // Route::get('admin/jewel/{jewel}/color/complete', 'App\Http\Controllers\Admin\ColorController@complete')->name('color.complete');
-    // Route::resource('admin/jewel/{jewel}/color', 'App\Http\Controllers\Admin\ColorController');
     // //商品管理
     // Route::post('admin/product/create-confirm', 'App\Http\Controllers\Admin\ProductController@create_confirm')->name('product.create-confirm');
     // Route::post('admin/product/{product}/edit-confirm', 'App\Http\Controllers\Admin\ProductController@edit_confirm')->name('product.edit-confirm');

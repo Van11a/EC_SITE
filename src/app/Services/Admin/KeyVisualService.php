@@ -15,11 +15,6 @@ class KeyVisualService
         $this->keyVisualRepository = $keyVisualRepository;
     }
 
-    public function getKeyVisual($id)
-    {
-        return $this->keyVisualRepository->getById($id);
-    }
-
     public function getAllKeyVisual()
     {
         return $this->keyVisualRepository->getAll();
@@ -80,8 +75,8 @@ class KeyVisualService
         $this->keyVisualRepository->update($key_visual,$data);
     }
 
-    public function destroyKeyVisual($id)
+    public function deleteKeyVisual(KeyVisual $key_visual)
     {
-        $this->keyVisualRepository->destroy($id);
+        $this->keyVisualRepository->delete($key_visual);
     }
 }
