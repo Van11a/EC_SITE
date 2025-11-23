@@ -65,9 +65,8 @@ class KeyVisualController extends Controller
     /**
      * 編集処理
      */
-    public function edit($id)
+    public function edit(KeyVisual $key_visual)
     {
-        $key_visual = $this->keyVisualService->getKeyVisual($id);
         return view('admin.keyvisual.edit', compact('key_visual'));
     }
 
@@ -88,15 +87,15 @@ class KeyVisualController extends Controller
     public function update(KeyVisual $key_visual, Request $request)
     {
         $validated_data = $request->session()->get('input_data');
-        // try{
+        try{
             $this->keyVisualService->updateKeyVisual($key_visual,$validated_data);
             return redirect()->route('key_visual.complete');
-        // } catch (\Throwable $e) {
-        //     report($e);
-        //     return redirect()->route('key_visual.index')->with([
-        //         'message' => '保存に失敗しました'
-        //     ])->withInput(); 
-        // }
+        } catch (\Throwable $e) {
+            report($e);
+            return redirect()->route('key_visual.index')->with([
+                'message' => '保存に失敗しました'
+            ])->withInput(); 
+        }
     }
 
     /**
@@ -111,19 +110,18 @@ class KeyVisualController extends Controller
     /**
      * 削除確認処理
      */
-    public function destroy_confirm($id) 
+    public function destroy_confirm(KeyVisual $key_visual) 
     {
-        $key_visual = $this->keyVisualService->getKeyVisual($id);
         return view('admin.keyvisual.destroy-confirm',compact('key_visual'));
     }
 
     /**
      * 削除機能
      */
-    public function destroy($id)
+    public function destroy(KeyVisual $key_visual)
     {
         try{
-            $this->keyVisualService->destroyKeyVisual($id);
+            $this->keyVisualService->deleteKeyVisual($key_visual);
             return view('admin.keyvisual.complete');
         } catch (\Throwable $e){
             report($e);

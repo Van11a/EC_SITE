@@ -10,11 +10,6 @@ class KeyVisualRepository
         $this->keyVisual = $keyVisual;
     }
 
-    public function getById($id)
-    {
-        return $this->keyVisual->find($id);
-    }
-
     public function getAll()
     {
         return $this->keyVisual->paginate(10);
@@ -30,8 +25,9 @@ class KeyVisualRepository
         return $keyVisual->update($data);
     }
 
-    public function destroy($id)
+    public function delete(KeyVisual $keyVisual)
     {
-        return $this->keyVisual->destroy($id);
+
+        return $keyVisual->delete();
     }
 }

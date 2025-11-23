@@ -51,12 +51,12 @@
                                         <td><img style="max-height:80px;" src="{{ $key_visual['image'] ? Storage::disk('public')->url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}"></td>
                                         <td>{{$key_visual->title}}</td>
                                         <td>
-                                            <a href="{{ route('key_visual.edit', $key_visual->id) }}">
+                                            <a href="{{ route('key_visual.edit', $key_visual) }}">
                                                 <button type="button" class="btn btn-warning">編集</button>
                                             </a>
-                                            {{--<a href="{{ route('key_visual.destroy') }}">
+                                            <a href="{{ route('key_visual.destroy-confirm', $key_visual) }}">
                                                 <button type="button" class="btn btn-danger">削除</button>
-                                            </a>--}}
+                                            </a>
                                         </td>
                                     </tr>
                                     @endforeach
