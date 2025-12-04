@@ -19,19 +19,35 @@ Route::middleware('auth')->group(function() {
     Route::post('admin/user/{user}/edit-confirm', 'App\Http\Controllers\Admin\UserController@edit_confirm')->name('user.edit-confirm');
     Route::get('admin/user/complete', 'App\Http\Controllers\Admin\UserController@complete')->name('user.complete');
     Route::resource('admin/user', 'App\Http\Controllers\Admin\UserController', ['except' => ['destroy']]);
-    // //商品管理
-    // Route::post('admin/product/create-confirm', 'App\Http\Controllers\Admin\ProductController@create_confirm')->name('product.create-confirm');
-    // Route::post('admin/product/{product}/edit-confirm', 'App\Http\Controllers\Admin\ProductController@edit_confirm')->name('product.edit-confirm');
-    // Route::get('admin/product/{product}/destroy-confirm', 'App\Http\Controllers\Admin\ProductController@destroy_confirm')->name('product.destroy-confirm');
-    // Route::get('admin/product/complete', 'App\Http\Controllers\Admin\ProductController@complete')->name('product.complete');
-    // Route::get('admin/product/{product}/copying', 'App\Http\Controllers\Admin\ProductController@copying')->name('product.copying');
-    // Route::resource('admin/product', 'App\Http\Controllers\Admin\ProductController');
+
+    //商品カテゴリ管理
+    Route::post('admin/category/create-confirm', 'App\Http\Controllers\Admin\CategoryController@create_confirm')->name('category.create-confirm');
+    Route::post('admin/category/{category}/edit-confirm', 'App\Http\Controllers\Admin\CategoryController@edit_confirm')->name('category.edit-confirm');
+    Route::get('admin/category/{category}/destroy-confirm', 'App\Http\Controllers\Admin\CategoryController@destroy_confirm')->name('category.destroy-confirm');
+    Route::get('admin/category/complete', 'App\Http\Controllers\Admin\CategoryController@complete')->name('category.complete');
+    Route::resource('admin/category', 'App\Http\Controllers\Admin\CategoryController');
+
+    //商品サブカテゴリ管理
+    Route::get('admin/category/{category}/sub_category', 'App\Http\Controllers\Admin\SubCategoryController@index')->name('sub_category.index');
+    Route::post('admin/category/{category}/sub_category', 'App\Http\Controllers\Admin\SubCategoryController@batch_update_confirm')->name('sub_category.batch_update_confirm');
+    Route::patch('admin/category/{category}/sub_category', 'App\Http\Controllers\Admin\SubCategoryController@batch_update')->name('sub_category.batch_update');
+    Route::get('admin/category/{category}/sub_category/complete', 'App\Http\Controllers\Admin\SubCategoryController@complete')->name('sub_category.complete');
+
+    //商品管理
+    Route::post('admin/goods/create-confirm', 'App\Http\Controllers\Admin\GoodsController@create_confirm')->name('goods.create-confirm');
+    Route::post('admin/goods/{goods}/edit-confirm', 'App\Http\Controllers\Admin\GoodsController@edit_confirm')->name('goods.edit-confirm');
+    Route::get('admin/goods/{goods}/destroy-confirm', 'App\Http\Controllers\Admin\GoodsController@destroy_confirm')->name('goods.destroy-confirm');
+    Route::get('admin/goods/complete', 'App\Http\Controllers\Admin\GoodsController@complete')->name('goods.complete');
+    Route::get('admin/goods/{goods}/copying', 'App\Http\Controllers\Admin\GoodsController@copying')->name('goods.copying');
+    Route::resource('admin/goods', 'App\Http\Controllers\Admin\GoodsController');
+
     // //キービジュアル管理
     Route::post('admin/key_visual/create-confirm', 'App\Http\Controllers\Admin\KeyVisualController@create_confirm')->name('key_visual.create-confirm');
     Route::post('admin/key_visual/{key_visual}/edit-confirm', 'App\Http\Controllers\Admin\KeyVisualController@edit_confirm')->name('key_visual.edit-confirm');
     Route::get('admin/key_visual/{key_visual}/destroy-confirm', 'App\Http\Controllers\Admin\KeyVisualController@destroy_confirm')->name('key_visual.destroy-confirm');
     Route::get('admin/key_visual/complete', 'App\Http\Controllers\Admin\KeyVisualController@complete')->name('key_visual.complete');
     Route::resource('admin/key_visual', 'App\Http\Controllers\Admin\KeyVisualController');
+
     // //振込管理
     // Route::post('admin/transfer/create-confirm', 'App\Http\Controllers\Admin\TransferController@create_confirm')->name('transfer.create-confirm');
     // Route::post('admin/transfer/{transfer}/edit-confirm', 'App\Http\Controllers\Admin\TransferController@edit_confirm')->name('transfer.edit-confirm');
@@ -41,8 +57,8 @@ Route::middleware('auth')->group(function() {
 });
 //フロントサイト
 Route::get('/', 'App\Http\Controllers\Front\TopController@index')->name('top.index');
-// Route::get('category/{category}', 'App\Http\Controllers\Front\ProductController@index')->name('front-product.index');
-// Route::get('product/{product}', 'App\Http\Controllers\Front\ProductController@show')->name('front-product.show');
+// Route::get('category/{category}', 'App\Http\Controllers\Front\GoodsController@index')->name('front-goods.index');
+// Route::get('goods/{goods}', 'App\Http\Controllers\Front\GoodsController@show')->name('front-goods.show');
 // Route::get('inquiry/', 'App\Http\Controllers\Front\InquiryController@index')->name('front-inquiry.index');
 // Route::post('inquiry/confirm', 'App\Http\Controllers\Front\InquiryController@confirm')->name('front-inquiry.confirm');
 // Route::post('inquiry/', 'App\Http\Controllers\Front\InquiryController@send')->name('front-inquiry.send');
