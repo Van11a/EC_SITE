@@ -27,7 +27,6 @@ class KeyVisualRepository
 
     public function delete(KeyVisual $keyVisual)
     {
-
         return $keyVisual->delete();
     }
 }

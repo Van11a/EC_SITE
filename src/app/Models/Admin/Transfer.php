@@ -3,10 +3,12 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Transfer extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $fillable = [
         'management_number',
         'last_name',
@@ -28,8 +30,8 @@ class Transfer extends Model
     /**
      * 決済情報に関連している商品の取得
      */
-    public function product()
+    public function goods()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Goods::class);
     }
 }

@@ -1,18 +1,21 @@
 <?php
 namespace App\Services\Front;
-use App\Models\Admin\Product;
-use App\Repositories\Admin\ProductRepository;
-class ProductService
+use App\Models\Admin\Goods;
+use App\Repositories\Admin\GoodsRepository;
+
+class GoodsService
 {
-    private $productRepository;
-    public function __construct(ProductRepository $productRepository)
+    private $goodsRepository;
+
+    public function __construct(GoodsRepository $goodsRepository)
     {
-        $this->productRepository = $productRepository;
+        $this->goodsRepository = $goodsRepository;
     }
-    public function displayProductsOnTheTopPage()
+
+    public function displayGoodssOnTheTopPage()
     {
         $now_date = date('Y-m-d H:i:s');
-        $query = Product::where('deleted_at', NULL)->where('is_display', 1)->where('is_reccomend', 1)->orderBy('updated_at', 'desc');
+        $query = Goods::where('deleted_at', NULL)->where('is_display', 1)->where('is_reccomend', 1)->orderBy('updated_at', 'desc');
         $query->where(function($query) use ($now_date) {
             $query->where(function($query) {
                 $query->where('public_start_date', NULL)->where('public_end_date', NULL);
@@ -24,12 +27,13 @@ class ProductService
                 $query->where('public_start_date', '<=', $now_date)->where('public_end_date', '>=', $now_date);
             });
         });
-        return $this->productRepository->getByQuery($query);
+        return $this->goodsRepository->getByQuery($query);
     }
-    public function searchProducts($id)
+
+    public function searchGoodss($id)
     {
         $now_date = date('Y-m-d H:i:s');
-        $query = Product::where('category_id', $id)->where('deleted_at', NULL)->where('is_display', 1);
+        $query = Goods::where('category_id', $id)->where('deleted_at', NULL)->where('is_display', 1);
         $query->where(function($query) use ($now_date) {
             $query->where(function($query) {
                 $query->where('public_start_date', NULL)->where('public_end_date', NULL);
@@ -42,6 +46,6 @@ class ProductService
             });
         });
 
-        return $this->productRepository->getByQuery($query);
+        return $this->goodsRepository->getByQuery($query);
     }
 }

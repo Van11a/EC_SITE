@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Product;
+namespace App\Http\Requests\Admin\Goods;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -46,8 +46,7 @@ class EditRequest extends FormRequest
             'public_start_date' => '掲載開始日',
             'public_end_date' => '掲載終了日',
             'status' => '状態',
-            'donation_amount' => '寄付金額',
-            'product_amount' => '商品金額',
+            'amount' => '商品金額',
             'cost' => 'コスト',
         ];
     }
@@ -91,8 +90,7 @@ class EditRequest extends FormRequest
             'public_start_date' => 'nullable|date',
             'public_end_date' => 'nullable|date|after:public_start_date',
             'status' => 'nullable|integer',
-            'donation_amount' => 'nullable|string',
-            'product_amount' => 'nullable|string',
+            'amount' => 'nullable|string',
             'cost' => 'nullable|string',
         ];
     

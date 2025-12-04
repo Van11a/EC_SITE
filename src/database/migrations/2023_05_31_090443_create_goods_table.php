@@ -2,6 +2,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 return new class extends Migration
 {
     /**
@@ -11,14 +12,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('goods', function (Blueprint $table) {
             $table->id();
             $table->string('part_number');
             $table->string('name');
             $table->foreignId('category_id')->constrained('categories');
             $table->text('text');
             $table->string('image1');
-            $table->string('image2')->nullable();
             $table->string('image3')->nullable();
             $table->string('image4')->nullable();
             $table->string('image5')->nullable();
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->softDeletes();
         });
     }
+
     /**
      * Reverse the migrations.
      *
@@ -40,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('goods');
     }
 };
