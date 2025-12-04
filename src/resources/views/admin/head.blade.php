@@ -14,5 +14,14 @@
 <!-- Custom styles for this template-->
 <link href="{{ env('SITE_URL') }}/common/css/sb-admin-2.min.css" rel="stylesheet">
 
+<!-- Bootstrap core JavaScript-->
 <script src="{{ env('SITE_URL') }}/common/vendor/jquery/jquery.min.js"></script>
+<script src="{{ env('SITE_URL') }}/common/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="{{ env('SITE_URL') }}/common/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="{{ env('SITE_URL') }}/common/js/sb-admin-2.min.js"></script>
+
 <script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/app.js"></script>

@@ -1,3 +1,7 @@
+<?php
+    $is_active = request()->is('admin/category*') || request()->is('admin/goods*');
+?>
+
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -21,12 +25,12 @@
 
     <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <a class="nav-link {{ $is_active ? 'active' : '' }}" href="javascript:void(0)" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="{{ $is_active ? 'true' : 'false' }}" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>商品管理</span></a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
+        <div id="collapseTwo" class="collapse {{ $is_active ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('goods.index') }}">商品管理</a>
+                <a class="collapse-item" href="#">商品管理</a>
                 <a class="collapse-item" href="{{ route('category.index') }}">カテゴリ管理</a>
             </div>
         </div>
@@ -40,7 +44,7 @@
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>振込管理</span></a>
     </li>
