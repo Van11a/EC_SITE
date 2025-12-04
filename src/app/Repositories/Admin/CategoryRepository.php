@@ -45,8 +45,8 @@ class CategoryRepository
         return $this->category->where('id', $id)->update($data);
     }
 
-    public function delete(Category $category)
+    public function destroy(int $id)
     {
-        return $category->delete();
+        return $this->category->destroy($id);
     }
 }
