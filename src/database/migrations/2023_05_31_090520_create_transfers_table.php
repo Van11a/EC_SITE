@@ -2,6 +2,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+
 return new class extends Migration
 {
     /**
@@ -14,7 +15,7 @@ return new class extends Migration
         Schema::create('transfers', function (Blueprint $table) {
             $table->id();
             $table->string('management_number')->unique();
-            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('goods_id')->constrained('goods');
             $table->string('last_name');
             $table->string('first_name');
             $table->string('last_name_kana');
@@ -34,6 +35,7 @@ return new class extends Migration
             $table->softDeletes();
         });
     }
+
     /**
      * Reverse the migrations.
      *

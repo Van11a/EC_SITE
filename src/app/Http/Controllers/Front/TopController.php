@@ -6,24 +6,27 @@ use App\Models\Admin\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Services\Front\KeyVisualService;
-use App\Services\Front\ProductService;
+use App\Services\Front\GoodsService;
+
 class TopController extends Controller
 {
     private $keyVisualService;
-    private $productService;
-    public function __construct(KeyVisualService $keyVisualService, ProductService $productService)
+    private $goodsService;
+
+    public function __construct(KeyVisualService $keyVisualService, GoodsService $goodsService)
     {
         $this->keyVisualService = $keyVisualService;
-        $this->productService = $productService;
+        $this->goodsService = $goodsService;
     }
+
     /**
      * 一覧画面
      */
     public function index() 
     {
         $key_visuals = $this->keyVisualService->displayKeyVisualsOnTheTopPage();
-        $products = $this->productService->displayProductsOnTheTopPage();
+        $goods = $this->goodsService->displayGoodssOnTheTopPage();
         $categories = Category::all();
-        return view('front.index',compact('key_visuals','products','categories'));
+        return view('front.index',compact('key_visuals','goods','categories'));
     }
 }

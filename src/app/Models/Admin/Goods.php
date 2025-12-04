@@ -3,10 +3,17 @@ namespace App\Models\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-class Product extends Model
+
+class Goods extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'part_number',
         'name',
@@ -25,6 +32,7 @@ class Product extends Model
         'amount',
         'cost'
     ];
+
     /**
      * 商品に関連しているカテゴリーの取得
      */
