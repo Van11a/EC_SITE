@@ -14,4 +14,5 @@
 <!-- Custom styles for this template-->
 <link href="{{ env('SITE_URL') }}/common/css/sb-admin-2.min.css" rel="stylesheet">
 
-<script src="{{ env('SITE_URL') }}/common/js/app.js"></script>
+<script src="{{ env('SITE_URL') }}/common/vendor/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/app.js"></script>
