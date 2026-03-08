@@ -25,7 +25,7 @@ class TopController extends Controller
     public function index() 
     {
         $key_visuals = $this->keyVisualService->displayKeyVisualsOnTheTopPage();
-        $goods = $this->goodsService->displayGoodssOnTheTopPage();
+        $goods = $this->goodsService->displayGoodsOnTheTopPage();
         $categories = Category::all();
         return view('front.index',compact('key_visuals','goods','categories'));
     }

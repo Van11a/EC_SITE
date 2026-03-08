@@ -48,7 +48,7 @@
                                     <div class="d-flex align-items-center">
                                         <input type="hidden" name="before_image" value="{{$key_visual->image}}" />
                                         <input type="file" id="imageFile" name="image" accept="image/*" class="d-none" value="{{$key_visual->image}}" >
-                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile" id="fileSelectLabel">ファイルを選択</label>
+                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile" id="fileSelectLabel1">ファイルを選択</label>
                                         <span id="fileNameDisplay" class="text-muted">{{$key_visual->image}}</span>
                                     </div>
                                     @if($errors->has('image'))

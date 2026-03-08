@@ -3,6 +3,7 @@
 
 <head>
     @include('admin/head')
+    <script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/imageupload.js"></script>
     <title>ES SITE</title>
 </head>
 
@@ -46,9 +47,8 @@
                                         <img src="{{old('image') ? Storage::disk('public')->url(old('image')) : 'https://placehold.jp/100x100.png' }}" alt="" id="imagePreview" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <input type="hidden" name="copy_image" value="{{old('image')}}" />
-                                        <input type="file" id="imageFile" name="image" accept="image/*" class="d-none" value="{{old('image')}}" >
-                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile" id="fileSelectLabel">
+                                        <input type="file" id="imageFile1" name="image" accept="image/*" class="d-none image-file" value="{{old('image')}}" >
+                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile1" id="fileSelectLabel1">
                                             ファイルを選択
                                         </label>
                                         <span id="fileNameDisplay" class="text-muted">選択されていません</span>
