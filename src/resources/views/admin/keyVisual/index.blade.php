@@ -48,7 +48,7 @@
                                     @foreach ($key_visuals as $key_visual)
                                     <tr>
                                         <td>{{$key_visual->display_order}}</td>
-                                        <td><img style="max-height:80px;" src="{{ $key_visual['image'] ? Storage::disk('public')->url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}"></td>
+                                        <td><img style="max-height:80px;" src="{{ $key_visual['image'] ? Storage::url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}"></td>
                                         <td>{{$key_visual->title}}</td>
                                         <td>
                                             <a href="{{ route('key_visual.edit', $key_visual) }}">

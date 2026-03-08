@@ -40,7 +40,7 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ $key_visual['image'] ? Storage::disk('public')->url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}">
+                                    <img style="max-height:250px;" src="{{ $key_visual['image'] ? Storage::url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}">
                                     <input type="hidden" name="image" value="{{$key_visual['image']}}" />
                                 </div>
                             </div>

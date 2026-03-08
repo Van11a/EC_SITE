@@ -43,7 +43,7 @@
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <div class="mb-2">
-                                        <img src="{{old('image') ? Storage::disk('public')->url(old('image')) : 'https://placehold.jp/100x100.png' }}" alt="" id="imagePreview" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                        <img src="{{old('image') ? Storage::url(old('image')) : 'https://placehold.jp/100x100.png' }}" alt="" id="imagePreview" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <input type="hidden" name="copy_image" value="{{old('image')}}" />
