@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function() {
     Route::post('admin/category/{category}/sub_category', 'App\Http\Controllers\Admin\SubCategoryController@batch_update_confirm')->name('sub_category.batch_update_confirm');
     Route::patch('admin/category/{category}/sub_category', 'App\Http\Controllers\Admin\SubCategoryController@batch_update')->name('sub_category.batch_update');
     Route::get('admin/category/{category}/sub_category/complete', 'App\Http\Controllers\Admin\SubCategoryController@complete')->name('sub_category.complete');
+    Route::get('admin/category/{parent_id}/subcategories', 'App\Http\Controllers\Admin\SubCategoryController@getSubCategories')->name('sub_category.get_subcategories');
 
     //商品管理
     Route::post('admin/goods/create-confirm', 'App\Http\Controllers\Admin\GoodsController@create_confirm')->name('goods.create-confirm');

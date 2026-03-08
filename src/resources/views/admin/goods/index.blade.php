@@ -50,8 +50,9 @@
                                     @foreach ($goods as $goods)
                                     <tr>
                                         <td>{{$goods->id}}</td>
-                                        <td>{{$goods->login_id}}</td>
+                                        <td>{{$goods->part_number}}</td>
                                         <td>{{$goods->name}}</td>
+                                        <td>{{$goods->text}}</td>
                                         <td>{{ date('Y年n月j日'), $goods->ins_date}}</td>
                                         <td>{{ date('Y年n月j日'), $goods->up_date}}</td>
                                         <td>

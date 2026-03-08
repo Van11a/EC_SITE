@@ -13,9 +13,9 @@ class CategoryService
         $this->categoryRepository = $categoryRepository;
     }
 
-    public function getAllCategories()
+    public function getAllParentCategories()
     {
-        return $this->categoryRepository->getAll();
+        return $this->categoryRepository->getAllParentCategory();
     }
 
     public function getCategory($id)

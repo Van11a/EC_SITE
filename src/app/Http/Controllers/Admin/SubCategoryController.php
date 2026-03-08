@@ -5,6 +5,7 @@ use App\Http\Requests\Admin\SubCategory\SubCategoryRequest;
 use Illuminate\Http\Request;
 use App\Services\Admin\SubCategoryService;
 use App\Models\Admin\category;
+use Illuminate\Support\Facades\Log;
 
 class SubCategoryController extends Controller
 {
@@ -76,6 +77,27 @@ class SubCategoryController extends Controller
     public function complete(Category $category)
     {
         return view('admin.subcategory.complete',compact('category'));
+    }
+
+    /**
+     * 非同期処理
+     * 子カテゴリー取得
+     */
+    public function getSubCategories(int $category_id)
+    {
+        try {
+            $sub_categories = $this->subCategoryService->getAllSubCategories($category_id);
+            return response()->json([
+                'success' => true,
+                'sub_categories' => $sub_categories
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => '取得に失敗しました',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
 }

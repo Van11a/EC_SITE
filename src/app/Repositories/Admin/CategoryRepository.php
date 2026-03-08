@@ -11,7 +11,7 @@ class CategoryRepository
         $this->category = $category;
     }
 
-    public function getAll()
+    public function getAllParentCategory()
     {
         return $this->category->whereNull('parent_id')
                        ->orderBy('display_order')

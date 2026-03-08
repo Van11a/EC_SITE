@@ -1,7 +1,9 @@
 <?php
+
 namespace App\Services\Front;
+
 use App\Models\Admin\Goods;
-use App\Repositories\Admin\GoodsRepository;
+use App\Repositories\Front\GoodsRepository;
 
 class GoodsService
 {
@@ -12,18 +14,18 @@ class GoodsService
         $this->goodsRepository = $goodsRepository;
     }
 
-    public function displayGoodssOnTheTopPage()
+    public function displayGoodsOnTheTopPage()
     {
         $now_date = date('Y-m-d H:i:s');
         $query = Goods::where('deleted_at', NULL)->where('is_display', 1)->where('is_reccomend', 1)->orderBy('updated_at', 'desc');
-        $query->where(function($query) use ($now_date) {
-            $query->where(function($query) {
+        $query->where(function ($query) use ($now_date) {
+            $query->where(function ($query) {
                 $query->where('public_start_date', NULL)->where('public_end_date', NULL);
-            })->Orwhere(function($query) use ($now_date) {
-                $query->where('public_start_date','<=', $now_date)->where('public_end_date', NULL);
-            })->Orwhere(function($query) use ($now_date) {
+            })->Orwhere(function ($query) use ($now_date) {
+                $query->where('public_start_date', '<=', $now_date)->where('public_end_date', NULL);
+            })->Orwhere(function ($query) use ($now_date) {
                 $query->where('public_start_date', NULL)->where('public_end_date', '>=', $now_date);
-            })->Orwhere(function($query) use ($now_date) {
+            })->Orwhere(function ($query) use ($now_date) {
                 $query->where('public_start_date', '<=', $now_date)->where('public_end_date', '>=', $now_date);
             });
         });
@@ -34,14 +36,14 @@ class GoodsService
     {
         $now_date = date('Y-m-d H:i:s');
         $query = Goods::where('category_id', $id)->where('deleted_at', NULL)->where('is_display', 1);
-        $query->where(function($query) use ($now_date) {
-            $query->where(function($query) {
+        $query->where(function ($query) use ($now_date) {
+            $query->where(function ($query) {
                 $query->where('public_start_date', NULL)->where('public_end_date', NULL);
-            })->Orwhere(function($query) use ($now_date) {
-                $query->where('public_start_date','<=', $now_date)->where('public_end_date', NULL);
-            })->Orwhere(function($query) use ($now_date) {
+            })->Orwhere(function ($query) use ($now_date) {
+                $query->where('public_start_date', '<=', $now_date)->where('public_end_date', NULL);
+            })->Orwhere(function ($query) use ($now_date) {
                 $query->where('public_start_date', NULL)->where('public_end_date', '>=', $now_date);
-            })->Orwhere(function($query) use ($now_date) {
+            })->Orwhere(function ($query) use ($now_date) {
                 $query->where('public_start_date', '<=', $now_date)->where('public_end_date', '>=', $now_date);
             });
         });
