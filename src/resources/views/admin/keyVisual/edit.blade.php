@@ -43,7 +43,7 @@
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <div class="mb-2">
-                                        <img src="{{$key_visual->image ? Storage::disk('public')->url($key_visual->image) : 'https://placehold.jp/100x100.png' }}" alt="" id="imagePreview" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                        <img src="{{$key_visual->image ? Storage::url($key_visual->image) : 'https://placehold.jp/100x100.png' }}" alt="" id="imagePreview" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <input type="hidden" name="before_image" value="{{$key_visual->image}}" />
