@@ -6,6 +6,17 @@
     <title>ES SITE</title>
 </head>
 
+@php
+    $imageUrl = 'https://placehold.jp/100x100.png';
+    if (old('image')) {
+        $imageUrl = Storage::url(old('image'));
+    } elseif (old('before_image')) {
+        $imageUrl = Storage::url(old('before_image'));
+    } else {
+        $imageUrl = Storage::url($key_visual->image);
+    }
+@endphp
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -33,7 +44,7 @@
                             <div class="mb-4 row">
                                 <label for="inputTitle" class="col-sm-2 col-form-label">タイトル<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="title" class="form-control" id="inputTitle" value="{{$key_visual->title}}">
+                                    <input type="text" name="title" class="form-control" id="inputTitle" value="{{ old('title', $key_visual->title) }}">
                                     @if($errors->has('title'))
                                         <span>{{ $errors->first('title') }}</span>
                                     @endif
@@ -43,13 +54,17 @@
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <div class="mb-2">
-                                        <img src="{{$key_visual->image ? Storage::url($key_visual->image) : 'https://placehold.jp/100x100.png' }}" alt="" id="imagePreview" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                        <img src="{{ $imageUrl }}" alt="" id="imagePreview" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <input type="hidden" name="before_image" value="{{$key_visual->image}}" />
-                                        <input type="file" id="imageFile" name="image" accept="image/*" class="d-none" value="{{$key_visual->image}}" >
-                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile" id="fileSelectLabel">ファイルを選択</label>
-                                        <span id="fileNameDisplay" class="text-muted">{{$key_visual->image}}</span>
+                                        <input type="hidden" name="before_image" value="{{ old('before_image', $key_visual->image) }}">
+                                        <input type="file" id="imageFile" name="image" accept="image/*" class="d-none" value="{{ old('image', $key_visual->image) }}" >
+                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile" id="fileSelectLabel">
+                                            ファイルを選択
+                                        </label>
+                                        <span id="fileNameDisplay" class="text-muted">
+                                            {{ old('before_image', $key_visual->image) }}
+                                        </span>
                                     </div>
                                     @if($errors->has('image'))
                                         <span>{{ $errors->first('image') }}</span>
@@ -59,7 +74,7 @@
                             <div class="mb-1 row">
                                 <label for="inputUrl" class="col-sm-2 col-form-label">URL</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="url" class="form-control" id="inputUrl" value="{{ $key_visual->url }}">
+                                    <input type="text" name="url" class="form-control" id="inputUrl" value="{{ old('url', $key_visual->url) }}">
                                     @if($errors->has('url'))
                                         <span>{{ $errors->first('url') }}</span>
                                     @endif
@@ -70,7 +85,7 @@
                                 <div class="col-sm-10">
                                     <div class="form-check">
                                         <input type="hidden" name="is_new_window" value="0">
-                                        <input class="form-check-input" name="is_new_window" type="checkbox" value="1" @if ($key_visual->is_new_window === 1) checked @endif>
+                                        <input class="form-check-input" name="is_new_window" type="checkbox" value="1" {{ old('is_new_window', $key_visual->is_new_window) == 1 ? 'checked' : '' }}>
                                         <label class="form-check-label">
                                             別窓で表示する
                                         </label>
@@ -85,13 +100,13 @@
                                 <div class="col-sm-10">
                                     <div class="row g-2 align-items-center">
                                         <div class="col-auto">
-                                            <input type="datetime-local" class="form-control" id="startDate" name="public_start_date" aria-label="開始日" @if($key_visual->public_start_date) value="{{$key_visual->public_start_date}}" @endif>
+                                            <input type="datetime-local" class="form-control" id="startDate" name="public_start_date" aria-label="開始日" value="{{ old('public_start_date', $key_visual->public_start_date) }}" >
                                         </div>
                                         <div class="col-auto">
                                             <span class="text-muted">〜</span>
                                         </div>
                                         <div class="col-auto">
-                                            <input type="datetime-local" class="form-control" id="endDate" name="public_end_date" aria-label="終了日" @if($key_visual->public_end_date) value="{{$key_visual->public_end_date}}" @endif>
+                                            <input type="datetime-local" class="form-control" id="endDate" name="public_end_date" aria-label="終了日" value="{{ old('public_end_date', $key_visual->public_end_date) }}" >
                                         </div>
                                         @if($errors->has('public_start_date') || $errors->has('public_end_date'))
                                             <div class="col-12 mt-1">
@@ -118,7 +133,7 @@
                                         step="1"
                                         inputmode="numeric"
                                         pattern="\d*"
-                                        value="{{ $key_visual->display_order}}"
+                                        value="{{ old('display_order', $key_visual->display_order) }}"
                                     >
                                     @if($errors->has('display_order'))
                                         <span>{{ $errors->first('display_order') }}</span>
@@ -130,13 +145,13 @@
                                 <div class="col-sm-10">
                                     <div class="d-flex"> 
                                         <div class="form-check mr-2">
-                                            <input class="form-check-input" type="radio" name="is_display" id="displayOn" value="1" @if($key_visual->is_display == 1) checked @endif>
+                                            <input class="form-check-input" type="radio" name="is_display" id="displayOn" value="1" {{ old('is_display', $key_visual->is_display) == 1 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="displayOn">
                                                 表示
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="is_display" id="displayOff" value="0" @if($key_visual->is_display == 0) checked @endif>
+                                            <input class="form-check-input" type="radio" name="is_display" id="displayOff" value="0" {{ old('is_display', $key_visual->is_display) == 0 ? 'checked' : '' }}>
                                             <label class="form-check-label" for="displayOff">
                                                 非表示
                                             </label>
@@ -147,6 +162,7 @@
                                     @endif
                                 </div>
                             </div>
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{ route('key_visual.index') }}' ">一覧へ戻る</button>
                             <button type="submit" class="btn btn-primary">入力確認へ進む</button>
                         </form>
                     </div>

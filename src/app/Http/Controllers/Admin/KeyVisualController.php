@@ -35,8 +35,12 @@ class KeyVisualController extends Controller
     /**
      * 登録画面
      */
-    public function create()
+    public function create(Request $request)
     {
+        // 確認画面から『戻る』ボタンで戻ってきた時用のセッション保存処理
+        if ($request->isMethod('post')) {
+            $request->flash();
+        }
         return view('admin.keyVisual.create');
     }
 
@@ -90,6 +94,10 @@ class KeyVisualController extends Controller
      */
     public function update(KeyVisual $key_visual, Request $request)
     {
+        if ($request->get('action') === 'back') {
+            return redirect()->route('key_visual.edit', ['key_visual' => $key_visual->id])->withInput();
+        }
+
         $validated_data = $request->session()->get('input_data');
         try {
             $this->keyVisualService->updateKeyVisual($key_visual, $validated_data);

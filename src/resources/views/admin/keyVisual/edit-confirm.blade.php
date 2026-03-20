@@ -105,7 +105,8 @@
                                     <input type="hidden" name="is_display" value="{{$input_data['is_display']}}" />
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">登録する</button>
+                            <button type="submit" class="btn btn-primary" name="action" value="back">入力画面へ戻る</button>
+                            <button type="submit" class="btn btn-primary" name="action" value="submit">登録する</button>
                         </form>
                     </div>
                 </div>
