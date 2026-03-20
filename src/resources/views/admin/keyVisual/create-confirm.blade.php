@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="form-wrap">
-                        <form method="POST" action="{{ route('key_visual.store') }}">
+                        <form method="POST" action="{{ route('key_visual.store') }}" id="frm">
                             @csrf
                             <div class="mb-3 row">
                                 <label for="inputTitle" class="col-sm-2 col-form-label">タイトル<span class="text-danger fw-bold">*</span></label>
@@ -40,7 +40,7 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ $key_visual['image'] ? Storage::disk('public')->url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}">
+                                    <img style="max-height:250px;" src="{{ $key_visual['image'] ? Storage::url($key_visual['image']) : 'https://placehold.jp/100x100.png' }}">
                                     <input type="hidden" name="image" value="{{$key_visual['image']}}" />
                                 </div>
                             </div>
@@ -93,8 +93,18 @@
                                     <input type="hidden" name="is_display" value="{{$key_visual['is_display']}}" />
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">登録する</button>
                         </form>
+                        <form action="{{ route('key_visual.create') }}" method="POST" id="back-frm">
+                            @csrf
+                            @foreach($key_visual as $key => $value)
+                                @if($key !== '_token' && !is_array($value))
+                                    <input type="hidden" name="{{ $key }}" value="{{ $value }}">
+                                @endif
+                            @endforeach
+                            <input type="hidden" name="copy_image" value="{{ $inputs['copy_image'] ?? '' }}">
+                        </form>
+                        <button type="submit" class="btn btn-primary" onclick="document.getElementById('back-frm').submit();" name="action" value="back">入力画面へ戻る</button>
+                        <button type="submit" class="btn btn-primary" onclick="document.getElementById('frm').submit();" name="action" value="submit">登録する</button>
                     </div>
                 </div>
                 <!-- /.container-fluid -->

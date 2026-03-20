@@ -42,7 +42,7 @@
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     @if(isset($key_visual['image']))
-                                        <img style="max-height:250px;" src="{{Storage::disk('public')->url($key_visual['image'])}}"/>
+                                        <img style="max-height:250px;" src="{{Storage::url($key_visual['image'])}}"/>
                                     @else
                                         <img style="max-height:250px;" src="https://placehold.jp/100x100.png"/>
                                     @endif

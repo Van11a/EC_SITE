@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SubCategory\SubCategoryRequest;
 use Illuminate\Http\Request;
@@ -32,15 +34,15 @@ class SubCategoryController extends Controller
             $form_items = $this->subCategoryService->blankForms($form_count);
         } else {
             $count_sub_category = count($sub_categories);
-            if($count_sub_category < $form_count){
+            if ($count_sub_category < $form_count) {
                 $not_enough_form_num = $form_count - $count_sub_category;
                 $add_form_items = $this->subCategoryService->blankForms($not_enough_form_num);
                 $form_items = $sub_categories->concat($add_form_items);
-            }else{
+            } else {
                 $form_items = $sub_categories;
             }
         }
-        return view('admin.subcategory.index',compact('form_items','category'));
+        return view('admin.subCategory.index', compact('form_items', 'category'));
     }
 
     /**
@@ -53,22 +55,22 @@ class SubCategoryController extends Controller
         //     $sub_category = $request->validated();
         //     $sub_categories[] = $sub_category;
         // }
-        $validated_data = $request->validated(); 
+        $validated_data = $request->validated();
         $request->session()->flash('input_data', $validated_data['sub_categories']);
         $sub_categories = $validated_data;
 
         // $sub_category = $request->validated();
-        return view('admin.subcategory.batch_update_confirm',compact('sub_categories','category'));
+        return view('admin.subCategory.batch_update_confirm', compact('sub_categories', 'category'));
     }
 
     /**
      * 一括登録・更新
      */
     public function batch_update(SubCategoryRequest $request, Category $category)
-    {   
+    {
         // $form_data = $request->validated(); 
-        $this->subCategoryService->syncSubCategories($category->id, $request['sub_categories']); 
-        return redirect()->route('sub_category.complete',$category);
+        $this->subCategoryService->syncSubCategories($category->id, $request['sub_categories']);
+        return redirect()->route('sub_category.complete', $category);
     }
 
     /**
@@ -76,7 +78,7 @@ class SubCategoryController extends Controller
      */
     public function complete(Category $category)
     {
-        return view('admin.subcategory.complete',compact('category'));
+        return view('admin.subCategory.complete', compact('category'));
     }
 
     /**
@@ -99,5 +101,4 @@ class SubCategoryController extends Controller
             ], 500);
         }
     }
-
 }

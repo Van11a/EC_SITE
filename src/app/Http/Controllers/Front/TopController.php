@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\Front;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\Admin\Category;
@@ -22,11 +24,11 @@ class TopController extends Controller
     /**
      * 一覧画面
      */
-    public function index() 
+    public function index()
     {
         $key_visuals = $this->keyVisualService->displayKeyVisualsOnTheTopPage();
         $goods = $this->goodsService->displayGoodsOnTheTopPage();
         $categories = Category::all();
-        return view('front.index',compact('key_visuals','goods','categories'));
+        return view('front.index', compact('key_visuals', 'goods', 'categories'));
     }
 }

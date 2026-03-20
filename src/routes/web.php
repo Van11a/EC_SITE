@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -10,10 +11,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware('auth')->group(function() {
+
+Route::middleware('auth')->group(function () {
     Route::get('admin/', function () {
         return view('admin/index');
-    }); 
+    });
     //アカウント管理
     Route::post('admin/user/create-confirm', 'App\Http\Controllers\Admin\UserController@create_confirm')->name('user.create-confirm');
     Route::post('admin/user/{user}/edit-confirm', 'App\Http\Controllers\Admin\UserController@edit_confirm')->name('user.edit-confirm');
@@ -43,6 +45,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('admin/goods', 'App\Http\Controllers\Admin\GoodsController');
 
     // //キービジュアル管理
+    Route::match(['get', 'post'], 'admin/key_visual/create', 'App\Http\Controllers\Admin\KeyVisualController@create')->name('key_visual.create');
     Route::post('admin/key_visual/create-confirm', 'App\Http\Controllers\Admin\KeyVisualController@create_confirm')->name('key_visual.create-confirm');
     Route::post('admin/key_visual/{key_visual}/edit-confirm', 'App\Http\Controllers\Admin\KeyVisualController@edit_confirm')->name('key_visual.edit-confirm');
     Route::get('admin/key_visual/{key_visual}/destroy-confirm', 'App\Http\Controllers\Admin\KeyVisualController@destroy_confirm')->name('key_visual.destroy-confirm');
@@ -70,4 +73,4 @@ Route::get('/', 'App\Http\Controllers\Front\TopController@index')->name('top.ind
 // Route::post('transfer/input-payment', 'App\Http\Controllers\Front\TransferController@input_payment')->name('front-payment.input-payment');
 // Route::post('transfer/get-token', 'App\Http\Controllers\Front\TransferController@get_token')->name('front-payment.get-token');
 // Route::post('transfer/payment-completion', 'App\Http\Controllers\Front\TransferController@payment_completion')->name('front-payment.payment-completion');
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -7,8 +7,16 @@
     <title>ES SITE</title>
 </head>
 
-<body id="page-top">
+@php
+    $imageUrl = 'https://placehold.jp/100x100.png';
+    if (old('image')) {
+        $imageUrl = Storage::url(old('image'));
+    } elseif (old('before_image')) {
+        $imageUrl = Storage::url(old('before_image'));
+    }
+@endphp
 
+<body id="page-top">
     <!-- Page Wrapper -->
     <div id="wrapper">
         @include('admin/sidebar')
@@ -44,14 +52,23 @@
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <div class="mb-2">
-                                        <img src="{{old('image') ? Storage::disk('public')->url(old('image')) : 'https://placehold.jp/100x100.png' }}" alt="" id="imagePreview" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                        <img src="{{ $imageUrl }}" alt="" id="imagePreview" class="{{ (old('image') || old('before_image')) ? '' : 'd-none' }}" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                     </div>
                                     <div class="d-flex align-items-center">
-                                        <input type="file" id="imageFile1" name="image" accept="image/*" class="d-none image-file" value="{{old('image')}}" >
-                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile1" id="fileSelectLabel1">
+                                        @if(old('before_image'))
+                                            <input type="hidden" name="before_image" value="{{ old('before_image') }}">
+                                        @endif
+                                        <input type="file" id="imageFile" name="image" accept="image/*" class="d-none" >
+                                        <label class="btn btn-outline-secondary mr-2 mb-0" for="imageFile" id="fileSelectLabel">
                                             ファイルを選択
                                         </label>
-                                        <span id="fileNameDisplay" class="text-muted">選択されていません</span>
+                                        <span id="fileNameDisplay" class="text-muted">
+                                            @if( old('before_image') )
+                                                {{ old('before_image') }}
+                                            @else
+                                                選択されていません
+                                            @endif
+                                        </span>
                                     </div>
                                     @if($errors->has('image'))
                                         <span>{{ $errors->first('image') }}</span>
@@ -149,6 +166,7 @@
                                     @endif
                                 </div>
                             </div>
+                            <button type="button" class="btn btn-primary" onclick="location.href='{{ route('key_visual.index') }}' ">一覧へ戻る</button>
                             <button type="submit" class="btn btn-primary">入力確認へ進む</button>
                         </form>
                     </div>

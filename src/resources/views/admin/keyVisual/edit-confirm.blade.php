@@ -46,9 +46,9 @@
                                 <label class="col-sm-2 col-form-label">画像<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     @if(isset($input_data['image']))
-                                        <img style="max-height:250px;" src="{{Storage::disk('public')->url($input_data['image'])}}"/>
+                                        <img style="max-height:250px;" src="{{Storage::url($input_data['image'])}}"/>
                                     @elseif(isset($input_data['before_image']))
-                                        <img style="max-height:250px;" src="{{Storage::disk('public')->url($input_data['before_image'])}}"/>
+                                        <img style="max-height:250px;" src="{{Storage::url($input_data['before_image'])}}"/>
                                     @else
                                         <img style="max-height:250px;" src="https://placehold.jp/100x100.png"/>
                                     @endif
@@ -105,7 +105,8 @@
                                     <input type="hidden" name="is_display" value="{{$input_data['is_display']}}" />
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">登録する</button>
+                            <button type="submit" class="btn btn-primary" name="action" value="back">入力画面へ戻る</button>
+                            <button type="submit" class="btn btn-primary" name="action" value="submit">登録する</button>
                         </form>
                     </div>
                 </div>
