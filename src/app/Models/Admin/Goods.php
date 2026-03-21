@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Models\Admin;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,7 +29,7 @@ class Goods extends Model
         'is_display',
         'public_start_date',
         'public_end_date',
-        'status',
+        'stock',
         'is_reccomend',
         'amount',
         'cost'

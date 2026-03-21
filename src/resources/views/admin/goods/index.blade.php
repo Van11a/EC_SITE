@@ -38,27 +38,37 @@
                             <table class="table table-hover bg-white">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>ログインID</th>
-                                        <th>管理者名</th>
-                                        <th>登録日</th>
-                                        <th>更新日</th>
+                                        <th>商品番号</th>
+                                        <th>商品名</th>
+                                        <th>画像</th>
+                                        <th>在庫数</th>
+                                        <th>商品金額</th>
+                                        <th>表示</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($goods as $item)
                                     <tr>
-                                        <td>{{$item->id}}</td>
-                                        <td>{{$item->part_number}}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>{{$item->text}}</td>
-                                        <td>{{ date('Y年n月j日'), $item->ins_date}}</td>
-                                        <td>{{ date('Y年n月j日'), $item->up_date}}</td>
+                                        <td>{{ $item->part_number }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td><img style="max-height:80px;" src="{{ Storage::disk('public')->url($item->image1) }}"></td>
+                                        <td>{{ $item->stock }}</td>
+                                        <td>{{ $item->amount }}</td>
+                                        <td>                                   
+                                            @if ($item->is_display == 1)
+                                                表示
+                                            @elseif ($item->is_display == 0)
+                                                非表示
+                                            @endif
+                                        </td>
                                         <td>
-                                            <a href="{{ route('goods.edit', $item->id) }}">
+                                            <a href="#">
                                                 <button type="button" class="btn btn-warning">編集</button>
                                             </a>
+                                            {{--<a href="{{ route('goods.edit', $item->id) }}">
+                                                <button type="button" class="btn btn-warning">編集</button>
+                                            </a>--}}
                                             {{--<a href="{{ route('goods.destroy') }}">
                                                 <button type="button" class="btn btn-danger">削除</button>
                                             </a>--}}

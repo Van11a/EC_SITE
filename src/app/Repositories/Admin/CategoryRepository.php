@@ -15,7 +15,7 @@ class CategoryRepository
 
     public function getAllCategory()
     {
-        return $this->category->paginate(10);
+        return $this->category->get();
     }
 
     public function getAllParentCategory()
