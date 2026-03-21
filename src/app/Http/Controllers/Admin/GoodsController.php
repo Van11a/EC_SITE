@@ -1,34 +1,47 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\Goods\NewRequest;
 use App\Http\Requests\Admin\Goods\EditRequest;
 use App\Models\Admin\Goods;
 use App\Http\Controllers\Controller;
 use App\Services\Admin\GoodsService;
+use App\Services\Admin\CategoryService;
 
 class GoodsController extends Controller
 {
     private $goodsService;
+    private $categoryService;
 
-    public function __construct(GoodsService $goodsService)
+    public function __construct(GoodsService $goodsService, CategoryService $categoryService)
     {
         $this->goodsService = $goodsService;
+        $this->categoryService = $categoryService;
     }
 
     /**
      * 一覧画面
      */
-    public function index() {
+    public function index()
+    {
         $goods = $this->goodsService->getAllGoods();
-        return view('admin.goods.index',compact('goods'));
+        return view('admin.goods.index', compact('goods'));
     }
 
     /**
      * 登録画面
      */
-    public function create() {
-        return view('admin.goods.create');
+    public function create(Request $request)
+    {
+        // 確認画面から『戻る』ボタンで戻ってきた時用のセッション保存処理
+        if ($request->isMethod('post')) {
+            $request->flash();
+        }
+
+        $categories = $this->categoryService->getAllParentCategories();
+        return view('admin.goods.create', compact('categories'));
     }
 
     /**
@@ -36,8 +49,10 @@ class GoodsController extends Controller
      */
     public function create_confirm(NewRequest $request)
     {
-        $goods = $request->validated();
-        return view('admin.goods.create-confirm',compact('goods'));
+        $validated_data = $request->validated();
+        $categries = $this->categoryService->getAllCategories();
+        $goods = $this->goodsService->uploadImageToTemporaryServer($validated_data, $request);
+        return view('admin.goods.create-confirm', compact('goods', 'categries'));
     }
 
     /**
@@ -52,7 +67,7 @@ class GoodsController extends Controller
             report($exception);
             return redirect()->route('goods.index')->with([
                 'msg' => '保存に失敗しました'
-            ])->withInput(); 
+            ])->withInput();
         }
     }
 
@@ -68,11 +83,11 @@ class GoodsController extends Controller
     /**
      * 編集確認処理
      */
-    public function edit_confirm(Goods $goods, EditRequest $request) 
+    public function edit_confirm(Goods $goods, EditRequest $request)
     {
         $validated_data = $request->validated();
         $request->session()->flash('input_data', $validated_data);
-        return view('admin.goods.edit-confirm',compact('goods'));
+        return view('admin.goods.edit-confirm', compact('goods'));
     }
 
     /**
@@ -81,7 +96,7 @@ class GoodsController extends Controller
     public function update(Goods $goods, Request $request)
     {
         $validated_data = $request->session()->get('input_data');
-        $this->goodsService->updateGoods($goods,$validated_data);
+        $this->goodsService->updateGoods($goods, $validated_data);
         return redirect()->route('goods.complete');
     }
 

@@ -3,6 +3,7 @@
 
 <head>
     @include('admin/head')
+    <script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/keyVisual/imageupload.js"></script>
     <title>ES SITE</title>
 </head>
 

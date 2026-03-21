@@ -47,15 +47,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($goods as $goods)
+                                    @foreach ($goods as $item)
                                     <tr>
-                                        <td>{{$goods->id}}</td>
-                                        <td>{{$goods->login_id}}</td>
-                                        <td>{{$goods->name}}</td>
-                                        <td>{{ date('Y年n月j日'), $goods->ins_date}}</td>
-                                        <td>{{ date('Y年n月j日'), $goods->up_date}}</td>
+                                        <td>{{$item->id}}</td>
+                                        <td>{{$item->part_number}}</td>
+                                        <td>{{$item->name}}</td>
+                                        <td>{{$item->text}}</td>
+                                        <td>{{ date('Y年n月j日'), $item->ins_date}}</td>
+                                        <td>{{ date('Y年n月j日'), $item->up_date}}</td>
                                         <td>
-                                            <a href="{{ route('goods.edit', $goods->id) }}">
+                                            <a href="{{ route('goods.edit', $item->id) }}">
                                                 <button type="button" class="btn btn-warning">編集</button>
                                             </a>
                                             {{--<a href="{{ route('goods.destroy') }}">

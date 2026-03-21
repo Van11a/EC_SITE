@@ -1,7 +1,7 @@
 <?php
+
 namespace App\Http\Requests\Admin\Category;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class EditRequest extends FormRequest
@@ -15,7 +15,7 @@ class EditRequest extends FormRequest
     {
         return [
             'name'  => 'カテゴリー名',
-            'display_order'=> '表示順',
+            'display_order' => '表示順',
         ];
     }
 
@@ -24,10 +24,10 @@ class EditRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
-            'name'=>'required|string|max:30',
+            'name' => 'required|string|max:30',
             'display_order' => [
                 'nullable',
                 'integer',

@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Requests\Admin\User;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -28,12 +30,13 @@ class NewRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name'=>'required|string|max:30',
-            'login_id'=>[
-                'required', 
-                'string', 
-                Rule::unique('users')->ignore($request->id,'id')],
-            'password'=>[
+            'name' => 'required|string|max:30',
+            'login_id' => [
+                'required',
+                'string',
+                Rule::unique('users')->ignore($this->id),
+            ],
+            'password' => [
                 'required',
                 'min:6',
                 'confirmed',

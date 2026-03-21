@@ -1,6 +1,7 @@
 <?php
+
 namespace App\Http\Requests\Admin\SubCategory;
-use Illuminate\Http\Request;
+
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -15,8 +16,8 @@ class SubCategoryRequest extends FormRequest
     {
         return [
             'name'  => 'カテゴリー名',
-            'display_order'=> '表示順',
-            'parent_id'=> '親カテゴリーID',
+            'display_order' => '表示順',
+            'parent_id' => '親カテゴリーID',
         ];
     }
 
@@ -29,13 +30,13 @@ class SubCategoryRequest extends FormRequest
         }
 
         if (isset($data['sub_categories']) && is_array($data['sub_categories'])) {
-            
+
             $sub_categories = [];
             foreach ($data['sub_categories'] as $index => $sub_category) {
                 if (isset($sub_category['id']) && is_numeric($sub_category['id'])) {
                     $sub_category['id'] = (int) $sub_category['id'];
                 } else {
-                    $sub_category['id'] = null; 
+                    $sub_category['id'] = null;
                 }
                 unset($sub_category['parent_id']);
 
@@ -52,7 +53,7 @@ class SubCategoryRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(Request $request)
+    public function rules()
     {
         $url_parent_id = $this->route('category')->id ?? null;
 

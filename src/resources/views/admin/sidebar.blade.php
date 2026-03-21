@@ -30,7 +30,7 @@
             <span>商品管理</span></a>
         <div id="collapseTwo" class="collapse {{ $is_active ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="#">商品管理</a>
+                <a class="collapse-item" href="{{ route('goods.index') }}">商品管理</a>
                 <a class="collapse-item" href="{{ route('category.index') }}">カテゴリ管理</a>
             </div>
         </div>

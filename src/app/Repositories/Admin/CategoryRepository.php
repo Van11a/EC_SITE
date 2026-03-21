@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Repositories\Admin;
+
 use App\Models\Admin\Category;
 
 class CategoryRepository
@@ -11,18 +13,23 @@ class CategoryRepository
         $this->category = $category;
     }
 
-    public function getAll()
+    public function getAllCategory()
+    {
+        return $this->category->paginate(10);
+    }
+
+    public function getAllParentCategory()
     {
         return $this->category->whereNull('parent_id')
-                       ->orderBy('display_order')
-                       ->paginate(15);
+            ->orderBy('display_order')
+            ->paginate(15);
     }
 
     public function getAllSubCategoriesByParentId(int $category_id)
     {
         return $this->category->where('parent_id', $category_id)
-                       ->orderBy('display_order')
-                       ->get();
+            ->orderBy('display_order')
+            ->get();
     }
 
     public function getById(int $id)

@@ -23,13 +23,8 @@ class KeyVisualController extends Controller
      */
     public function index()
     {
-        try {
-            $key_visuals = $this->keyVisualService->getAllKeyVisual();
-            return view('admin.keyVisual.index', compact('key_visuals'));
-        } catch (\Throwable $e) {
-            report($e);
-            throw $e;
-        }
+        $key_visuals = $this->keyVisualService->getAllKeyVisual();
+        return view('admin.keyVisual.index', compact('key_visuals'));
     }
 
     /**
@@ -41,6 +36,7 @@ class KeyVisualController extends Controller
         if ($request->isMethod('post')) {
             $request->flash();
         }
+
         return view('admin.keyVisual.create');
     }
 

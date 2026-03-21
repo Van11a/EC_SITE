@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Requests\Admin\Goods;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class EditRequest extends FormRequest
@@ -15,17 +14,10 @@ class EditRequest extends FormRequest
     public function attributes()
     {
         return [
-            'model_number' => '型番',
             'part_number' => '品番',
             'name' => '商品名',
-            'category_id' => 'カテゴリーID',
-            'material_id' => '金種ID',
-            'side_jewel_id' => '脇石ID',
-            'side_jewel_ct' => '脇石カラット',
-            'side_jewel_color_id' => '脇石カラー',
-            'jewel_id' => '中石ID',
-            'jewel_ct' => '中石カラット',
-            'jewel_color_id' => '中石カラー',
+            'parent_category_id' => '親カテゴリーID',
+            'sub_category_id' => '子カテゴリーID',
             'text' => '備考',
             'image1' => '画像１',
             'image2' => '画像２',
@@ -45,7 +37,7 @@ class EditRequest extends FormRequest
             'is_reccomend' => 'オススメ',
             'public_start_date' => '掲載開始日',
             'public_end_date' => '掲載終了日',
-            'status' => '状態',
+            'stock' => '在庫数',
             'amount' => '商品金額',
             'cost' => 'コスト',
         ];
@@ -56,22 +48,15 @@ class EditRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
-            'model_number' => 'required|string',
-            'part_number' => 'nullable|string',
+            'part_number' => 'required|string',
             'name' => 'required|string',
-            'category_id' => 'required|string',
-            'material_id' => 'required|string',
-            'side_jewel_id' => 'nullable|string',
-            'side_jewel_ct' => 'nullable|string',
-            'side_jewel_color_id' => 'nullable|string',
-            'jewel_id' => 'nullable|string',
-            'jewel_ct' => 'nullable|string',
-            'jewel_color_id' => 'nullable|string',
+            'parent_category_id' => 'required|string',
+            'sub_category_id' => 'nullable|string',
             'text' => 'required|string',
-            'image1' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
+            'image1' => 'required|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image2' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image3' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image4' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
@@ -89,10 +74,9 @@ class EditRequest extends FormRequest
             'is_reccomend' => 'nullable|in:0,1',
             'public_start_date' => 'nullable|date',
             'public_end_date' => 'nullable|date|after:public_start_date',
-            'status' => 'nullable|integer',
-            'amount' => 'nullable|string',
+            'stock' => 'nullable|integer',
+            'amount' => 'required|string',
             'cost' => 'nullable|string',
         ];
-    
     }
 }

@@ -71,11 +71,12 @@ class NewRequest extends FormRequest
 
     /**
      * バリデーション失敗時の処理
+     * 選択した画像プレビューが消えるのを解消するためのもの
      */
     protected function failedValidation(Validator $validator)
     {
         $inputs = $this->all();
-        unset($inputs['image']);
+        unset($inputs['image']); //ファイル（画像）を抹消
 
         $response = redirect()
             ->to($this->getRedirectUrl())

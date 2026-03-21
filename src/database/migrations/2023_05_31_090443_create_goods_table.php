@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('category_id')->constrained('categories');
             $table->text('text');
             $table->string('image1');
+            $table->string('image2')->nullable();
             $table->string('image3')->nullable();
             $table->string('image4')->nullable();
             $table->string('image5')->nullable();
@@ -26,8 +27,8 @@ return new class extends Migration
             $table->boolean('is_reccomend')->nullable();
             $table->dateTime('public_start_date')->nullable();
             $table->dateTime('public_end_date')->nullable();
-            $table->integer('status')->nullable();
-            $table->integer('amount')->nullable();
+            $table->integer('stock')->nullable();
+            $table->integer('amount');
             $table->integer('cost')->nullable();
             $table->timestamps();
             $table->softDeletes();
