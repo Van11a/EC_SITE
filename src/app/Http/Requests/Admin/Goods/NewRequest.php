@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests\Admin\Goods;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class NewRequest extends FormRequest
@@ -46,17 +44,15 @@ class NewRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(Request $request)
+    public function rules()
     {
-        var_dump($request);
-        exit;
         return [
-            'part_number' => 'nullable|string',
+            'part_number' => 'required|string',
             'name' => 'required|string',
             'parent_category_id' => 'required|string',
             'sub_category_id' => 'nullable|string',
             'text' => 'required|string',
-            'image1' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
+            'image1' => 'required|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image2' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image3' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image4' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
@@ -74,5 +70,28 @@ class NewRequest extends FormRequest
             'amount' => 'required|string',
             'cost' => 'nullable|string',
         ];
+    }
+
+    /**
+     * バリデーション前に画像1〜5を先にアップロード
+     */
+    protected function prepareForValidation()
+    {
+        $service = app(\App\Services\Admin\GoodsService::class);
+        $results = $service->uploadImageToTemporaryServer($this->all(), $this);
+
+        $mergeData = [];
+        for ($i = 1; $i <= 5; $i++) {
+            $key = 'image' . $i;
+
+            // サービスから返ってきたパスがあれば、before_imageX としてマージ
+            if (isset($results[$key])) {
+                $mergeData['before_image' . $i] = $results[$key];
+            }
+        }
+
+        if (!empty($mergeData)) {
+            $this->merge($mergeData);
+        }
     }
 }

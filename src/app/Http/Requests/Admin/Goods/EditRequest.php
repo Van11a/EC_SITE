@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Http\Requests\Admin\Goods;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class EditRequest extends FormRequest
@@ -49,15 +48,15 @@ class EditRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(Request $request)
+    public function rules()
     {
         return [
-            'part_number' => 'nullable|string',
+            'part_number' => 'required|string',
             'name' => 'required|string',
             'parent_category_id' => 'required|string',
             'sub_category_id' => 'nullable|string',
             'text' => 'required|string',
-            'image1' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
+            'image1' => 'required|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image2' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image3' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image4' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
@@ -79,6 +78,5 @@ class EditRequest extends FormRequest
             'amount' => 'required|string',
             'cost' => 'nullable|string',
         ];
-    
     }
 }

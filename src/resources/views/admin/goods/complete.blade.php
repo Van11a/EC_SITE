@@ -24,13 +24,13 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">管理者登録完了</h1>
+                        <h1 class="h3 mb-0 text-gray-800">商品登録完了</h1>
                     </div>
 
                     <div class="form-wrap">
                         登録が完了しました。
                     </div>
-                    <a href="{{ route('user.index') }}" class="btn btn-secondary">一覧に戻る</a>
+                    <a href="{{ route('goods.index') }}" class="btn btn-secondary">一覧に戻る</a>
                     </div>
                 </div>
                 <!-- /.container-fluid -->

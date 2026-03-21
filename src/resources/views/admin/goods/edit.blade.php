@@ -154,6 +154,15 @@
                                 </div>
                             </div>
                             <div class="mb-4 row">
+                                <label for="inputText" class="col-sm-2 col-form-label">説明文<span class="text-danger fw-bold">*</span></label>
+                                <div class="col-sm-10">
+                                    <textarea name="text" class="form-control" id="inputText"></textarea>
+                                    @if($errors->has('text'))
+                                        <span>{{ $errors->first('text') }}</span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
                                 <label class="col-sm-2 col-form-label">表示設定<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     <div class="d-flex"> 

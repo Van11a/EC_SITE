@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Services\Admin;
+
 use App\Models\Admin\Category;
 use App\Repositories\Admin\CategoryRepository;
 use Illuminate\Support\Arr;
@@ -11,6 +13,11 @@ class CategoryService
     public function __construct(CategoryRepository $categoryRepository)
     {
         $this->categoryRepository = $categoryRepository;
+    }
+
+    public function getAllCategories()
+    {
+        return $this->categoryRepository->getAllCategory();
     }
 
     public function getAllParentCategories()
@@ -26,15 +33,15 @@ class CategoryService
     public function createNewCategory($request)
     {
         $display_order = $this->generateNewDisplayOrder(); //表示順自動生成
-        $data = $request->only(['name','parent_id']);
+        $data = $request->only(['name', 'parent_id']);
         $data['display_order'] = $display_order;
         $this->categoryRepository->create($data);
     }
 
     public function updateCategory(Category $category, array $request)
     {
-        $data = Arr::only($request, ['name','parent_id']);
-        $this->categoryRepository->update($category,$data);
+        $data = Arr::only($request, ['name', 'parent_id']);
+        $this->categoryRepository->update($category, $data);
     }
 
     public function generateNewDisplayOrder()

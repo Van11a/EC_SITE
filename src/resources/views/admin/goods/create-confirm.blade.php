@@ -47,15 +47,14 @@
                             <div class="mb-3 row">
                                 <label for="inputTitle" class="col-sm-2 col-form-label">カテゴリー<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
-                                    {{$goods['parent_category_id']}}
-                                    <input type="hidden" name="parent_category_id" value="{{$goods['parent_category_id']}}">
+                                    {{ $categries[$goods['parent_category_id']]['name'] }}
+                                    <input type="hidden" name="category_id" value=" {{ isset($goods['sub_category_id']) ? $goods['sub_category_id'] : $goods['parent_category_id'] }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="inputTitle" class="col-sm-2 col-form-label">サブカテゴリー<span class="text-danger fw-bold">*</span></label>
+                                <label for="inputTitle" class="col-sm-2 col-form-label">サブカテゴリー</label>
                                 <div class="col-sm-10">
-                                    {{$goods['sub_category_id']}}
-                                    <input type="hidden" name="sub_category_id" value="{{$goods['sub_category_id']}}">
+                                    {{ isset($goods['sub_category_id']) ? $categries[$goods['sub_category_id']]['name'] : '' }}
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -66,31 +65,41 @@
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label">画像２<span class="text-danger fw-bold">*</span></label>
+                                <label class="col-sm-2 col-form-label">画像２</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ $goods['image2'] ? Storage::disk('public')->url($goods['image2]) : 'https://placehold.jp/100x100.png' }}">
-                                    <input type="hidden" name="image2" value="{{$goods['image2']}}" />
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image2']) && $goods['image2']) ? Storage::disk('public')->url($goods['image2']) : 'https://placehold.jp/100x100.png' }}">
+                                    <input type="hidden" name="image2" value="{{ isset($goods['image2']) ? $goods['image2'] : '' }}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label">画像３<span class="text-danger fw-bold">*</span></label>
+                                <label class="col-sm-2 col-form-label">画像３</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ $goods['image3'] ? Storage::disk('public')->url($goods['image3']) : 'https://placehold.jp/100x100.png' }}">
-                                    <input type="hidden" name="image3" value="{{$goods['image3']}}" />
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image3']) && $goods['image3']) ? Storage::disk('public')->url($goods['image3']) : 'https://placehold.jp/100x100.png' }}">
+                                    <input type="hidden" name="image3" value="{{ isset($goods['image3']) ? $goods['image3'] : '' }}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label">画像４<span class="text-danger fw-bold">*</span></label>
+                                <label class="col-sm-2 col-form-label">画像４</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ $goods['image4'] ? Storage::disk('public')->url($goods['image4']) : 'https://placehold.jp/100x100.png' }}">
-                                    <input type="hidden" name="image4" value="{{$goods['image4']}}" />
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image4']) && $goods['image4']) ? Storage::disk('public')->url($goods['image4']) : 'https://placehold.jp/100x100.png' }}">
+                                    <input type="hidden" name="image4" value="{{ isset($goods['image4']) ? $goods['image4'] : '' }}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label class="col-sm-2 col-form-label">画像５<span class="text-danger fw-bold">*</span></label>
+                                <label class="col-sm-2 col-form-label">画像５</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ $goods['image5'] ? Storage::disk('public')->url($goods['image5']) : 'https://placehold.jp/100x100.png' }}">
-                                    <input type="hidden" name="image5" value="{{$goods['image5']}}" />
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image5']) && $goods['image5']) ? Storage::disk('public')->url($goods['image5']) : 'https://placehold.jp/100x100.png' }}">
+                                    <input type="hidden" name="image5" value="{{ isset($goods['image5']) ? $goods['image5'] : '' }}" />
+                                </div>
+                            </div>
+                            <div class="mb-4 row">
+                                <label for="inputText" class="col-sm-2 col-form-label">説明文<span class="text-danger fw-bold">*</span></label>
+                                <div class="col-sm-10">
+                                    {{ $goods['text'] }}
+                                    <input type="hidden" name="text" value="{{ isset($goods['text']) ? $goods['text'] : '' }}" />
+                                    @if($errors->has('text'))
+                                        <span>{{ $errors->first('text') }}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -100,7 +109,7 @@
                                     @if (isset($goods['is_reccomend']) && $goods['is_reccomend'] == 1)
                                         設定する
                                     @endif
-                                    <input type="hidden" name="is_new_window" value="{{$goods['is_new_window']}}" />
+                                    <input type="hidden" name="is_new_window" value="{{ isset($goods['is_new_window']) ? $goods['is_new_window'] : '' }}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
@@ -116,30 +125,30 @@
                                                 {{date('Y/n/j H:i', strtotime($goods['public_end_date']))}}
                                             @endif
                                         @endif
-                                        <input type="hidden" name="public_start_date" value="{{$goods['public_start_date']}}" />
-                                        <input type="hidden" name="public_end_date" value="{{$goods['public_end_date']}}" />
+                                        <input type="hidden" name="public_start_date" value="{{ isset($goods['public_start_date']) ? $goods['public_start_date'] : '' }}" />
+                                        <input type="hidden" name="public_end_date" value="{{ isset($goods['public_end_date']) ? $goods['public_end_date'] : '' }}" />
                                     </div>
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="inputTitle" class="col-sm-2 col-form-label">在庫数<span class="text-danger fw-bold">*</span></label>
+                                <label for="inputTitle" class="col-sm-2 col-form-label">在庫数</label>
                                 <div class="col-sm-10">
-                                    {{$goods['stock']}}
-                                    <input type="hidden" name="stock" value="{{$goods['stock']}}">
+                                    {{ isset($goods['stock']) ? $goods['stock'] : '' }}
+                                    <input type="hidden" name="stock" value="{{ isset($goods['stock']) ? $goods['stock'] : '' }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="inputTitle" class="col-sm-2 col-form-label">商品金額<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     {{$goods['amount']}}
-                                    <input type="hidden" name="amount" value="{{$goods['amount']}}">
+                                    <input type="hidden" name="amount" value="{{ ($goods['amount']) }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
-                                <label for="inputTitle" class="col-sm-2 col-form-label">コスト<span class="text-danger fw-bold">*</span></label>
+                                <label for="inputTitle" class="col-sm-2 col-form-label">コスト</label>
                                 <div class="col-sm-10">
-                                    {{$goods['cost']}}
-                                    <input type="hidden" name="cost" value="{{$goods['cost']}}">
+                                    {{ isset($goods['cost']) ? $goods['cost'] : '' }}
+                                    <input type="hidden" name="cost" value="{{ isset($goods['cost']) ? $goods['cost'] : '' }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">

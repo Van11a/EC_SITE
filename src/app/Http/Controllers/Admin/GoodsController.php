@@ -33,8 +33,13 @@ class GoodsController extends Controller
     /**
      * 登録画面
      */
-    public function create()
+    public function create(Request $request)
     {
+        // 確認画面から『戻る』ボタンで戻ってきた時用のセッション保存処理
+        if ($request->isMethod('post')) {
+            $request->flash();
+        }
+
         $categories = $this->categoryService->getAllParentCategories();
         return view('admin.goods.create', compact('categories'));
     }
@@ -44,10 +49,10 @@ class GoodsController extends Controller
      */
     public function create_confirm(NewRequest $request)
     {
-        var_dump($request);
-        exit;
-        $goods = $request->validated();
-        return view('admin.goods.create-confirm', compact('goods'));
+        $validated_data = $request->validated();
+        $categries = $this->categoryService->getAllCategories();
+        $goods = $this->goodsService->uploadImageToTemporaryServer($validated_data, $request);
+        return view('admin.goods.create-confirm', compact('goods', 'categries'));
     }
 
     /**

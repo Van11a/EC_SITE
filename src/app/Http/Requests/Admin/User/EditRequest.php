@@ -1,6 +1,7 @@
 <?php
+
 namespace App\Http\Requests\Admin\User;
-use Illuminate\Http\Request;
+
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,21 +26,22 @@ class EditRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules(Request $request)
+    public function rules()
     {
         $user_model = $this->route('user');
 
         return [
-            'name'=>'required|string|max:30',
-            'login_id'=>[
-                'required', 
-                'string', 
-                Rule::unique('users')->ignore($user_model)],
-            'password'=>[
+            'name' => 'required|string|max:30',
+            'login_id' => [
+                'required',
+                'string',
+                Rule::unique('users')->ignore($user_model)
+            ],
+            'password' => [
                 'nullable',
                 'min:6',
                 'confirmed',
-             s   'regex:/^[a-zA-Z0-9_-]+$/',
+                'regex:/^[a-zA-Z0-9_-]+$/',
             ],
         ];
     }
