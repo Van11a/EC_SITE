@@ -52,7 +52,7 @@
                                     <tr>
                                         <td>{{ $item->part_number }}</td>
                                         <td>{{ $item->name }}</td>
-                                        <td><img style="max-height:80px;" src="{{ Storage::disk('public')->url($item->image1) }}"></td>
+                                        <td><img style="max-height:80px;" src="{{ Storage::url($item['image1']) }}"></td>
                                         <td>{{ $item->stock }}</td>
                                         <td>{{ $item->amount }}</td>
                                         <td>                                   

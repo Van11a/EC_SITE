@@ -42,31 +42,42 @@ class GoodsService
 
     public function uploadImageToServer(Request $request, $index)
     {
-        $newPath = "";
         $key = 'image' . $index;
         $oldPath = $request->input($key);
 
-        // 1. パスが空でなく、かつ実際にファイルが存在するか確認
-        if ($oldPath && Storage::disk('public')->exists($oldPath)) {
+        // パスが空でなく、かつ実際にファイルが存在するか確認
+        if ($oldPath && Storage::exists($oldPath)) {
             $newPath = 'goods/' . basename($oldPath);
-            Storage::disk('public')->move($oldPath, $newPath);
+            Storage::move($oldPath, $newPath);
+
+            return $newPath;
         }
-        return $newPath;
+
+        return "";
     }
 
-    public function updateuploadedImageToServer(array $request, $data)
+    public function updateuploadedImageToServer(array $request, array $data)
     {
         for ($i = 1; $i <= 5; $i++) {
-            if ($request['image' . $i]) {
-                $before_image = $request['before_image' . $i];
-                $newPath = 'goods/' . basename($request['image' . $i]);
+            $key = 'image' . $i;
+            $beforeKey = 'before_image' . $i;
 
-                Storage::move($request['image' . $i], $newPath);
-                $data['image'] = $newPath;
+            if (!empty($request[$key])) {
+                $tempPath = $request[$key];
 
-                //更新前の画像を削除
-                if ($before_image != $request['image'] && Storage::exists($before_image)) {
-                    Storage::delete($before_image);
+                $fileName = basename($tempPath);
+                $newPath = 'goods/' . $fileName;
+
+                if (Storage::exists($tempPath)) {
+                    Storage::move($tempPath, $newPath);
+
+                    $data[$key] = $newPath;
+                    $beforeImage = $request[$beforeKey] ?? null;
+
+                    //更新前の画像を削除
+                    if ($beforeImage && $beforeImage !== $newPath && Storage::exists($beforeImage)) {
+                        Storage::delete($beforeImage);
+                    }
                 }
             }
         }

@@ -60,35 +60,35 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">画像１<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ $goods['image1'] ? Storage::disk('public')->url($goods['image1']) : 'https://placehold.jp/100x100.png' }}">
+                                    <img style="max-height:250px;" src="{{ $goods['image1'] ? Storage::url($goods['image1']) : 'https://placehold.jp/100x100.png' }}">
                                     <input type="hidden" name="image1" value="{{$goods['image1']}}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">画像２</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ (isset($goods['image2']) && $goods['image2']) ? Storage::disk('public')->url($goods['image2']) : 'https://placehold.jp/100x100.png' }}">
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image2']) && $goods['image2']) ? Storage::url($goods['image2']) : 'https://placehold.jp/100x100.png' }}">
                                     <input type="hidden" name="image2" value="{{ isset($goods['image2']) ? $goods['image2'] : '' }}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">画像３</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ (isset($goods['image3']) && $goods['image3']) ? Storage::disk('public')->url($goods['image3']) : 'https://placehold.jp/100x100.png' }}">
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image3']) && $goods['image3']) ? Storage::url($goods['image3']) : 'https://placehold.jp/100x100.png' }}">
                                     <input type="hidden" name="image3" value="{{ isset($goods['image3']) ? $goods['image3'] : '' }}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">画像４</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ (isset($goods['image4']) && $goods['image4']) ? Storage::disk('public')->url($goods['image4']) : 'https://placehold.jp/100x100.png' }}">
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image4']) && $goods['image4']) ? Storage::url($goods['image4']) : 'https://placehold.jp/100x100.png' }}">
                                     <input type="hidden" name="image4" value="{{ isset($goods['image4']) ? $goods['image4'] : '' }}" />
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label class="col-sm-2 col-form-label">画像５</label>
                                 <div class="col-sm-10">
-                                    <img style="max-height:250px;" src="{{ (isset($goods['image5']) && $goods['image5']) ? Storage::disk('public')->url($goods['image5']) : 'https://placehold.jp/100x100.png' }}">
+                                    <img style="max-height:250px;" src="{{ (isset($goods['image5']) && $goods['image5']) ? Storage::url($goods['image5']) : 'https://placehold.jp/100x100.png' }}">
                                     <input type="hidden" name="image5" value="{{ isset($goods['image5']) ? $goods['image5'] : '' }}" />
                                 </div>
                             </div>
