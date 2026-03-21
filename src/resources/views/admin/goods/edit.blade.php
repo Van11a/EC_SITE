@@ -3,7 +3,7 @@
 
 <head>
     @include('admin/head')
-    <script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/imageupload.js"></script>
+    <script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/goods/imageupload.js"></script>
     <title>ES SITE</title>
 </head>
 

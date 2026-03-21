@@ -3,7 +3,7 @@
 
 <head>
 @include('admin/head')
-<script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/imageupload.js"></script>
+<script type="text/javascript" src="{{ env('SITE_URL') }}/common/js/goods/imageupload.js"></script>
 <title>ES SITE</title>
 </head>
 
@@ -79,7 +79,7 @@
                         <div class="mb-3 row">
                             <label for="inputSubCategory" class="col-sm-2 col-form-label">サブカテゴリー</label>
                             <div class="col-sm-10">
-                                <select name="sub_category_id" class="form-control" id="inputSubCategory" disabled {{ old('sub_category_id') == $category->id ? 'selected' : '' }}>
+                                <select name="sub_category_id" class="form-control" id="inputSubCategory" {{ old('parent_category_id') ? '' : 'disabled' }}>
                                     <option value="">選択してください</option>
                                 </select>
                             </div>
@@ -88,7 +88,7 @@
                             <label class="col-sm-2 col-form-label">画像１<span class="text-danger fw-bold">*</span></label>
                             <div class="col-sm-10">
                                 <div class="mb-2">
-                                    <img src="{{ $imageUrl1 }}" alt="" id="imagePreview1" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                    <img src="{{ $imageUrl1 }}" alt="" id="imagePreview1" class="{{ (old('image1') || old('before_image1')) ? '' : 'd-none' }}" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                 </div>
                                 <div class="d-flex align-items-center">
                                     @if(old('before_image1'))
@@ -115,7 +115,7 @@
                             <label class="col-sm-2 col-form-label">画像２</label>
                             <div class="col-sm-10">
                                 <div class="mb-2">
-                                    <img src="{{ $imageUrl2 }}" alt="" id="imagePreview2" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                    <img src="{{ $imageUrl2 }}" alt="" id="imagePreview2" class="{{ (old('image2') || old('before_image2')) ? '' : 'd-none' }}" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                 </div>
                                 <div class="d-flex align-items-center">
                                     @if(old('before_image2'))
@@ -142,7 +142,7 @@
                             <label class="col-sm-2 col-form-label">画像３</label>
                             <div class="col-sm-10">
                                 <div class="mb-2">
-                                    <img src="{{ $imageUrl3 }}" alt="" id="imagePreview3" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                    <img src="{{ $imageUrl3 }}" alt="" id="imagePreview3" class="{{ (old('image3') || old('before_image3')) ? '' : 'd-none' }}" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                 </div>
                                 <div class="d-flex align-items-center">
                                     @if(old('before_image3'))
@@ -169,7 +169,7 @@
                             <label class="col-sm-2 col-form-label">画像４</label>
                             <div class="col-sm-10">
                                 <div class="mb-2">
-                                    <img src="{{ $imageUrl4 }}" alt="" id="imagePreview4" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                    <img src="{{ $imageUrl4 }}" alt="" id="imagePreview4" class="{{ (old('image4') || old('before_image4')) ? '' : 'd-none' }}" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                 </div>
                                 <div class="d-flex align-items-center">
                                     @if(old('before_image4'))
@@ -196,7 +196,7 @@
                             <label class="col-sm-2 col-form-label">画像５</label>
                             <div class="col-sm-10">
                                 <div class="mb-2">
-                                    <img src="{{ $imageUrl5 }}" alt="" id="imagePreview5" class="d-none" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
+                                    <img src="{{ $imageUrl5 }}" alt="" id="imagePreview5" class="{{ (old('image5') || old('before_image5')) ? '' : 'd-none' }}" style="max-width: 150px; height: auto; border: 1px solid #ddd; border-radius: 4px;">
                                 </div>
                                 <div class="d-flex align-items-center">
                                     @if(old('before_image5'))
@@ -334,32 +334,48 @@
 <!-- End of Page Wrapper -->
 
 <script>
-    $('#inputParentCategory').change(function(){
-        $('#inputSubCategory').empty(); //要素のリセット
-        const seleted_category_id = $(this).val();
+$(document).ready(function() {
+    const oldParentId = "{{ old('parent_category_id') }}";
+    const oldSubId = "{{ old('sub_category_id') }}";
 
-        if(seleted_category_id){
-            fetch(`/admin/category/${seleted_category_id}/subcategories`)
-            .then(response => {
-                return response.json();
-            })
+    // 親カテゴリに紐づくサブカテゴリーを取得する処理
+    function loadSubCategories(parentId, selectedSubId = null) {
+        if (!parentId) {
+            $('#inputSubCategory').empty().append('<option value="">選択してください</option>').prop('disabled', true);
+            return;
+        }
+
+        fetch(`/admin/category/${parentId}/subcategories`)
+            .then(response => response.json())
             .then(data => {
-                $('#inputSubCategory').prop('disabled',false);
+                const $subCategorySelect = $('#inputSubCategory');
+                $subCategorySelect.empty().append('<option value="">選択してください</option>');
+                
                 $.each(data.sub_categories, function(index, val) {
-                $('#inputSubCategory').append('<option value="' + val.id + '">' + val.name + '</option>');
-            });
+                    const isSelected = (selectedSubId && val.id == selectedSubId) ? 'selected' : '';
+                    $subCategorySelect.append('<option value="' + val.id + '" ' + isSelected + '>' + val.name + '</option>');
+                });
+
+                $subCategorySelect.prop('disabled', false);
             })
             .catch(error => {
                 console.error("エラー詳細:", error);
-                console.log("失敗しました");
             });
-        }else{
-            $('#inputSubCategory').empty();
-            $('#inputSubCategory').append('<option value="">選択してください</option>');
-            $('#inputSubCategory').prop('disabled',true);
-        }
+    }
+
+    // カテゴリーが変更された時のイベント
+    $('#inputParentCategory').change(function() {
+        const selectedId = $(this).val();
+        loadSubCategories(selectedId);
     });
+
+    // バリデーションエラーなどで戻ってきた時の初期処理
+    if (oldParentId) {
+        loadSubCategories(oldParentId, oldSubId);
+    }
+});
 </script>
+
 </body>
 
 </html>

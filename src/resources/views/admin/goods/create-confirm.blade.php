@@ -48,7 +48,7 @@
                                 <label for="inputTitle" class="col-sm-2 col-form-label">カテゴリー<span class="text-danger fw-bold">*</span></label>
                                 <div class="col-sm-10">
                                     {{ $categries[$goods['parent_category_id']]['name'] }}
-                                    <input type="hidden" name="category_id" value=" {{ isset($goods['sub_category_id']) ? $goods['sub_category_id'] : $goods['parent_category_id'] }}">
+                                    <input type="hidden" name="category_id" value="{{ isset($goods['sub_category_id']) ? $goods['sub_category_id'] : $goods['parent_category_id'] }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">

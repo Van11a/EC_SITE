@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Admin\Goods;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
 class NewRequest extends FormRequest
 {
@@ -52,7 +54,7 @@ class NewRequest extends FormRequest
             'parent_category_id' => 'required|string',
             'sub_category_id' => 'nullable|string',
             'text' => 'required|string',
-            'image1' => 'required|max:2000|image|mimes:jpeg,png,jpg,pdf',
+            'image1' => 'required_without:before_image1|nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image2' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image3' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
             'image4' => 'nullable|max:2000|image|mimes:jpeg,png,jpg,pdf',
@@ -93,5 +95,39 @@ class NewRequest extends FormRequest
         if (!empty($mergeData)) {
             $this->merge($mergeData);
         }
+    }
+
+    /**
+     * バリデーション失敗時の処理
+     * 選択した画像プレビューが消えるのを解消するためのもの
+     */
+    protected function failedValidation(Validator $validator)
+    {
+        $inputs = $this->all();
+        for ($i = 1; $i <= 5; $i++) {
+            unset($inputs['image' . $i]); //ファイル（画像）を抹消
+        }
+
+        $response = redirect()
+            ->to($this->getRedirectUrl())
+            ->withInput($inputs) // before_imageを保持
+            ->withErrors($validator, $this->errorBag); // エラーメッセージを保持
+
+        // 例外オブジェクトを作成し、作成したレスポンスをセットして投げる
+        $exception = new ValidationException($validator);
+        $exception->response = $response;
+
+        throw $exception;
+    }
+
+    /**
+     * 画像のバリデーションメッセージ
+     */
+    public function messages()
+    {
+        return [
+            'image1.required' => ':attributeは必須です。',
+            'image1.required_without' => ':attributeは必須です。',
+        ];
     }
 }
