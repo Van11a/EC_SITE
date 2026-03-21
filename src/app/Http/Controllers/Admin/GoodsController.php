@@ -50,9 +50,9 @@ class GoodsController extends Controller
     public function create_confirm(NewRequest $request)
     {
         $validated_data = $request->validated();
-        $categries = $this->categoryService->getAllCategories();
+        $categories = $this->categoryService->getAllCategories();
         $goods = $this->goodsService->uploadImageToTemporaryServer($validated_data, $request);
-        return view('admin.goods.create-confirm', compact('goods', 'categries'));
+        return view('admin.goods.create-confirm', compact('goods', 'categories'));
     }
 
     /**
