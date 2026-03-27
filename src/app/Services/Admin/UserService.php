@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Services\Admin;
+
 use App\Models\Admin\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -25,9 +27,9 @@ class UserService
         return $this->userRepository->getAll();
     }
 
-    public function createNewUser($request)
+    public function createNewUser(array $request)
     {
-        $result = $request->only(['name','login_id']);
+        $result = Arr::only($request, ['name', 'login_id']);
         $data = array_merge($result, ([
             'unid' => (string) Str::uuid(),
             'password' => Hash::make($request['password']),
@@ -37,12 +39,12 @@ class UserService
 
     public function updateUser(User $user, array $request)
     {
-        $data = Arr::only($request, ['name','login_id','password']);
-        if(isset($data['password'])){
-            $data['password'] = Hash::make($request['password']);
-        }else{
+        $data = Arr::only($request, ['name', 'login_id', 'password']);
+        if (isset($data['password']) && !empty($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
             unset($data['password']);
         }
-        $this->userRepository->update($user,$data);
+        $this->userRepository->update($user, $data);
     }
 }

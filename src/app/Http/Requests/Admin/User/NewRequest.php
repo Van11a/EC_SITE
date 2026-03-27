@@ -13,6 +13,16 @@ class NewRequest extends FormRequest
      *
      * @return bool
      */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
     public function attributes()
     {
         return [
@@ -34,7 +44,7 @@ class NewRequest extends FormRequest
             'login_id' => [
                 'required',
                 'string',
-                Rule::unique('users')->ignore($this->id),
+                'unique:users,login_id',
             ],
             'password' => [
                 'required',
@@ -42,6 +52,7 @@ class NewRequest extends FormRequest
                 'confirmed',
                 'regex:/^[a-zA-Z0-9_-]+$/',
             ],
+            'password_confirmation' => 'required',
         ];
     }
 }

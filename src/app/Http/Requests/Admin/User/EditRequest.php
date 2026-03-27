@@ -12,6 +12,16 @@ class EditRequest extends FormRequest
      *
      * @return bool
      */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
     public function attributes()
     {
         return [
@@ -43,6 +53,7 @@ class EditRequest extends FormRequest
                 'confirmed',
                 'regex:/^[a-zA-Z0-9_-]+$/',
             ],
+            'password_confirmation' => 'nullable',
         ];
     }
 }

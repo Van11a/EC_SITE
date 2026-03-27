@@ -33,7 +33,7 @@
                             <div class="mb-3 row">
                                 <label for="inputName" class="col-sm-2 col-form-label">管理者名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="name" class="form-control" id="inputName">
+                                    <input type="text" name="name" class="form-control" id="inputName" value="{{ old('name') }}">
                                     @if($errors->has('name'))
                                         <span>{{ $errors->first('name') }}</span>
                                     @endif
@@ -42,7 +42,7 @@
                             <div class="mb-3 row">
                                 <label for="inputId" class="col-sm-2 col-form-label">ログインID</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="login_id" class="form-control" id="inputId">
+                                    <input type="text" name="login_id" class="form-control" id="inputId" value="{{ old('login_id') }}">
                                     @if($errors->has('login_id'))
                                         <span>{{ $errors->first('login_id') }}</span>
                                     @endif

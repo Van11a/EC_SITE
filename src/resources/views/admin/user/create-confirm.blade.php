@@ -50,6 +50,7 @@
                                     {{$user['password']}}
                                 </div>
                                 <input type="hidden" name="password" value="{{$user['password']}}">
+                                <input type="hidden" name="password_confirmation" value="{{$user['password_confirmation']}}">
                             </div>
                             <button type="submit" class="btn btn-primary">登録する</button>
                         </form>
